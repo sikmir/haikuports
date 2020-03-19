@@ -1,0 +1,42 @@
+SUMMARY="An extensible editor for OpenStreetMap"
+DESCRIPTION="JOSM is the \"Java OpenStreetMap Editor\". It is a feature-rich editor \
+for the experienced OSM mapper. It requires some configuration efforts. But if you \
+intend to become a great OSM mapper, it's worth the time you need to get used to it."
+HOMEPAGE="https://josm.openstreetmap.de/"
+COPYRIGHT="2006-2020 Immanuel Scholz, Dirk Stöcker"
+LICENSE="GNU GPL v2"
+REVISION="1"
+SOURCE_URI="https://josm.openstreetmap.de/download/josm-snapshot-$portVersion.jar#noarchive"
+CHECKSUM_SHA256="2e006584349dd1bd890ad56b420d50f623f81044075736e8be638d5934ac99d7"
+#ADDITIONAL_FILES="
+#	josm.rdef.in
+#	"
+
+ARCHITECTURES="any"
+
+PROVIDES="
+	josm = $portVersion
+	app:josm = $portVersion
+	"
+REQUIRES="
+	haiku
+	java:environment == 8
+	"
+
+INSTALL()
+{
+	josmDir=$appsDir/JOSM
+	mkdir -p $josmDir/java
+
+	cp josm-snapshot-$portVersion.jar $josmDir/java/josm.jar
+
+	cat << EOF > $josmDir/josm.sh
+#!/bin/sh
+APPDIR="\$(dirname -- "\$(readlink -f -- "\${0}")" )"
+CLASSPATH="\${APPDIR}/java/josm.jar"
+\${JDK8_HOME}/bin/java -cp "\${CLASSPATH}" -Djosm.restart=true org.openstreetmap.josm.gui.MainApplication "\$@"
+EOF
+	chmod +x $josmDir/josm.sh
+
+	addAppDeskbarSymlink $josmDir/josm.sh 'JOSM'
+}
