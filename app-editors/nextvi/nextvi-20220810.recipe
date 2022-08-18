@@ -1,0 +1,43 @@
+SUMMARY="Next version of neatvi (a small vi/ex editor)"
+DESCRIPTION="Nextvi is a vi/ex editor, it can edit bidirectional UTF-8 text"
+HOMEPAGE="https://github.com/kyx0r/nextvi"
+COPYRIGHT="2020-2022 Kyryl Melekhin"
+LICENSE="MIT"
+REVISION="1"
+srcGitRev="4f12f4fb897001ab0ab9cdc59113846315b0757e"
+SOURCE_URI="https://github.com/kyx0r/nextvi/archive/$srcGitRev.zip"
+CHECKSUM_SHA256="d951b0714fc9afa4c41712180d828a5d2d15c08446255534a982d7bd58de4f96"
+SOURCE_DIR="nextvi-$srcGitRev"
+
+ARCHITECTURES="all !x86_gcc2"
+SECONDARY_ARCHITECTURES="x86"
+
+commandBinDir=$binDir
+if [ "$targetArchitecture" = x86_gcc2 ]; then
+    commandBinDir=$prefix/bin
+fi
+
+PROVIDES="
+    nextvi$secondaryArchSuffix = $portVersion
+    cmd:vi$secondaryArchSuffix = $portVersion
+    "
+REQUIRES="
+    haiku$secondaryArchSuffix
+    "
+
+BUILD_REQUIRES="
+    haiku${secondaryArchSuffix}_devel
+    "
+BUILD_PREREQUIRES="
+    cmd:gcc$secondaryArchSuffix
+    "
+
+BUILD()
+{
+    sh ./build.sh
+}
+
+INSTALL()
+{
+    PREFIX=$prefix sh ./build.sh install
+}
