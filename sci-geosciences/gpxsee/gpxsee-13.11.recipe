@@ -6,7 +6,7 @@ Main features:
 
 * Opens GPX, TCX, FIT, KML, NMEA, IGC, CUP, SIGMA SLF, Suunto SML, LOC, GeoJSON, \
 OziExplorer (PLT, RTE, WPT), Garmin GPI & CSV, TomTom OV2 &amp; ITN, ONmove OMD/GHP, \
-TwoNav (TRK, RTE, WPT) and geotagged JPEG files
+TwoNav (TRK, RTE, WPT), GPSDump and geotagged JPEG files
 * User-definable online maps (OpenStreetMap/Google tiles, WMTS, WMS, TMS, \
 QuadTiles)
 * Offline maps (MBTiles, OziExplorer maps, TrekBuddy maps/atlases, Garmin IMG/GMAP \
@@ -27,7 +27,7 @@ COPYRIGHT="2015-2023 Martin Tůma"
 LICENSE="GNU GPL v3"
 REVISION="1"
 SOURCE_URI="https://github.com/tumic0/gpxsee/archive/$portVersion/GPXSee-$portVersion.tar.gz"
-CHECKSUM_SHA256="86079c7d8053a64837042695e666cd4f4aac7fb01b19e76106cf9b124653b22f"
+CHECKSUM_SHA256="85c65db7f8d3b100c82fcef521b72145b2c5146b0a5ea22316fae72b8d05dcbf"
 SOURCE_DIR="GPXSee-$portVersion"
 PATCHES="gpxsee-$portVersion.patchset"
 ADDITIONAL_FILES="

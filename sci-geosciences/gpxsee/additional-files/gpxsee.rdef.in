@@ -57,6 +57,7 @@ resource file_types message {
 	"types" = "application/vnd.twonav.trk",
 	"types" = "application/vnd.twonav.rte",
 	"types" = "application/vnd.twonav.wpt",
+	"types" = "application/vnd.gpsdump.wpt",
 	"types" = "application/x-tar",
 	"types" = "image/jpeg",
 	"types" = "image/tiff",
