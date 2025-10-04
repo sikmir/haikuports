@@ -4,11 +4,11 @@ It offers modern conveniences familiar from web browsers, \
 such as smooth scrolling, inline image viewing, multiple tabs, \
 visual themes, Unicode fonts, bookmarks, history, and page outlines."
 HOMEPAGE="https://gmi.skyjake.fi/lagrange/"
-COPYRIGHT="2020-2024 Jaakko Keränen"
+COPYRIGHT="2020-2025 Jaakko Keränen"
 LICENSE="BSD (2-clause)"
 REVISION="1"
 SOURCE_URI="https://github.com/skyjake/lagrange/releases/download/v$portVersion/lagrange-$portVersion.tar.gz"
-CHECKSUM_SHA256="b9d0982617fec495565ac9c09fb788a0be207d6fdf2324edc390e5cac8b1523b"
+CHECKSUM_SHA256="65025f37804634330cfc5442145169f2cc27bd52f26bc58d6b33683aa12a2d6b"
 SOURCE_DIR="lagrange-$portVersion"
 ADDITIONAL_FILES="lagrange.rdef.in"
 
