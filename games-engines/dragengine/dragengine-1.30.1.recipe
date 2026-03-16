@@ -114,6 +114,7 @@ BUILD()
 	echo "docdir = '$manDir'" >>custom.py
 	echo "version = '$portVersion'" >>custom.py
 
+
 	# scons $jobArgs build
 	# scons crashes with multi-thread in some situations.
 	# this is a python problem especially with version 3 onwards
