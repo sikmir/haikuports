@@ -22,7 +22,7 @@ COPYRIGHT="2010-2022 Google, Inc.
 LICENSE="MIT"
 REVISION="1"
 SOURCE_URI="https://github.com/harfbuzz/harfbuzz/releases/download/$portVersion/harfbuzz-$portVersion.tar.xz"
-CHECKSUM_SHA256="6f6db164359a2da5a84ef826615b448b33e6306067ad829d85d5b0bf936f1bb8"
+CHECKSUM_SHA256="e7f3b8bac3fdcc529985be8e84fbd65c675ac47ee58512b15a5dd620c79ffe2a"
 PATCHES="harfbuzz-$portVersion.patchset"
 
 ARCHITECTURES="all !x86_gcc2"
@@ -35,20 +35,24 @@ if [ "$targetArchitecture" = x86_gcc2 ]; then
 	commandBinDir=$prefix/bin
 fi
 
-libVersion="0.61232.0"
+libVersion="0.61311.0"
 libVersionCompat="$libVersion compat >= ${libVersion%%.*}"
 
 PROVIDES="
 	harfbuzz$secondaryArchSuffix = $portVersion compat >= 0.9
 	lib:libharfbuzz$secondaryArchSuffix = $libVersionCompat
 	lib:libharfbuzz_icu$secondaryArchSuffix = $libVersionCompat
+	lib:libharfbuzz_raster$secondaryArchSuffix = $libVersionCompat
 	lib:libharfbuzz_subset$secondaryArchSuffix = $libVersionCompat
+	lib:libharfbuzz_vector$secondaryArchSuffix = $libVersionCompat
 	"
 REQUIRES="
 	haiku$secondaryArchSuffix
 	lib:libfreetype$secondaryArchSuffix
 	lib:libgraphite2$secondaryArchSuffix
 	lib:libicuuc$secondaryArchSuffix
+	lib:libpng16$secondaryArchSuffix
+	lib:libz$secondaryArchSuffix
 	"
 SUPPLEMENTS="
 	lib:libfreetype$secondaryArchSuffix
@@ -75,7 +79,9 @@ PROVIDES_devel="
 	harfbuzz${secondaryArchSuffix}_devel = $portVersion compat >= 0.9
 	devel:libharfbuzz$secondaryArchSuffix = $libVersionCompat
 	devel:libharfbuzz_icu$secondaryArchSuffix = $libVersionCompat
+	devel:libharfbuzz_raster$secondaryArchSuffix = $libVersionCompat
 	devel:libharfbuzz_subset$secondaryArchSuffix = $libVersionCompat
+	devel:libharfbuzz_vector$secondaryArchSuffix = $libVersionCompat
 	"
 REQUIRES_devel="
 	harfbuzz$secondaryArchSuffix == $portVersion base
@@ -152,7 +158,9 @@ INSTALL()
 		libharfbuzz \
 		libharfbuzz-gobject \
 		libharfbuzz-icu \
+		libharfbuzz-raster \
 		libharfbuzz-subset \
+		libharfbuzz-vector \
 
 	fixPkgconfig
 
