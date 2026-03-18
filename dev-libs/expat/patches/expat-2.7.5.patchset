@@ -1,4 +1,4 @@
-From 044c28bac274c97f870bffa5d09ba6d80f2c0945 Mon Sep 17 00:00:00 2001
+From 10bdc693bf0d7f0ce6fb9d8762e9aa6baa267050 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Fran=C3=A7ois=20Revol?= <revol@free.fr>
 Date: Sat, 2 Dec 2023 02:02:15 +0100
 Subject: Fix INTERFACE_INCLUDE_DIRECTORIES on Haiku
@@ -50,10 +50,10 @@ index 0000000..c1aad9d
 +# Commands beyond this point should not need to know the version.
 +set(CMAKE_IMPORT_FILE_VERSION)
 diff --git a/configure.ac b/configure.ac
-index 71fe499..d25195d 100644
+index 6d028b5..b376f77 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -452,6 +452,10 @@ AS_CASE("${host_os}",
+@@ -453,6 +453,10 @@ AS_CASE("${host_os}",
      CMAKE_SOURCE=cmake/autotools/expat__windows.cmake.in
      CMAKE_NOCONFIG_SOURCE=cmake/autotools/expat-noconfig__windows.cmake.in
    ],
@@ -68,17 +68,17 @@ index 71fe499..d25195d 100644
 2.51.0
 
 
-From 1aad0157bdcb8e94f9b6673f2f555e6fb1a9a024 Mon Sep 17 00:00:00 2001
+From 0e2c67bf66ce2420e62adc191dc11fb3ec9eb0b3 Mon Sep 17 00:00:00 2001
 From: Jerome Duval <jerome.duval@gmail.com>
 Date: Wed, 7 Feb 2024 18:47:27 +0100
 Subject: can't allocate so much on Haiku
 
 
 diff --git a/tests/basic_tests.c b/tests/basic_tests.c
-index b76cc45..67dd17e 100644
+index 02d1d5f..c9a5b60 100644
 --- a/tests/basic_tests.c
 +++ b/tests/basic_tests.c
-@@ -3109,13 +3109,18 @@ START_TEST(test_buffer_can_grow_to_max) {
+@@ -3109,7 +3109,7 @@ START_TEST(test_buffer_can_grow_to_max) {
        "withreadabilityprettygreatithinkanywaysthisisprobablylongenoughbye><x a='"};
    const int num_prefixes = sizeof(prefixes) / sizeof(prefixes[0]);
    int maxbuf = INT_MAX / 2 + (INT_MAX & 1); // round up without overflow
@@ -86,33 +86,22 @@ index b76cc45..67dd17e 100644
 +#if defined(__HAIKU__) || (defined(__MINGW32__) && ! defined(__MINGW64__))
    // workaround for mingw/wine32 on GitHub CI not being able to reach 1GiB
    // Can we make a big allocation?
-   void *big = malloc(maxbuf);
-   if (! big) {
-     // The big allocation failed. Let's be a little lenient.
-     maxbuf = maxbuf / 2;
-+    big = malloc(maxbuf);
-+    if (! big) {
-+      // The big allocation failed. Let's be a little lenient.
-+      maxbuf = maxbuf / 2;
-+    }
-   }
-   free(big);
- #endif
+   for (int i = 1; i <= 2; i++) {
 -- 
 2.51.0
 
 
-From e0e8ee11a9bd25baa7f5190d863d1f1e93299ff1 Mon Sep 17 00:00:00 2001
+From a18e8b90329ed191f596633867f540e9ffe3a1a8 Mon Sep 17 00:00:00 2001
 From: Jerome Duval <jerome.duval@gmail.com>
 Date: Wed, 7 Feb 2024 18:47:27 +0100
 Subject: support for getentropy on Haiku
 
 
 diff --git a/configure.ac b/configure.ac
-index d25195d..ae13670 100644
+index b376f77..727563a 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -290,6 +290,19 @@ AS_IF([test "x$with_sys_getrandom" != xno],
+@@ -291,6 +291,19 @@ AS_IF([test "x$with_sys_getrandom" != xno],
        AS_IF([test "x$with_sys_getrandom" = xyes],
          [AC_MSG_ERROR([enforced the use of syscall SYS_getrandom --with-sys-getrandom, but not detected])])])])
  
@@ -133,7 +122,7 @@ index d25195d..ae13670 100644
  AC_CHECK_HEADERS(fcntl.h unistd.h)
  AC_TYPE_OFF_T
 diff --git a/lib/xmlparse.c b/lib/xmlparse.c
-index 086fca5..12fbe36 100644
+index 0248b66..543c99d 100644
 --- a/lib/xmlparse.c
 +++ b/lib/xmlparse.c
 @@ -143,8 +143,8 @@
@@ -155,7 +144,7 @@ index 086fca5..12fbe36 100644
        * Linux (including <3.17) / BSD / macOS (including <10.7) / Solaris >=8 (/dev/urandom): XML_DEV_URANDOM, \
        * Windows >=Vista (rand_s): _WIN32. \
      \
-@@ -1035,7 +1036,7 @@ static const XML_Char implicitContext[]
+@@ -1037,7 +1038,7 @@ static const XML_Char implicitContext[]
         '\0'};
  
  /* To avoid warnings about unused functions: */
@@ -164,7 +153,7 @@ index 086fca5..12fbe36 100644
  
  #  if defined(HAVE_GETRANDOM) || defined(HAVE_SYSCALL_GETRANDOM)
  
-@@ -1104,7 +1105,7 @@ writeRandomBytes_dev_urandom(void *target, size_t count) {
+@@ -1106,7 +1107,7 @@ writeRandomBytes_dev_urandom(void *target, size_t count) {
  
  #  endif /* ! defined(_WIN32) && defined(XML_DEV_URANDOM) */
  
@@ -173,7 +162,7 @@ index 086fca5..12fbe36 100644
  
  #if defined(HAVE_ARC4RANDOM) && ! defined(HAVE_ARC4RANDOM_BUF)
  
-@@ -1163,7 +1164,7 @@ writeRandomBytes_rand_s(void *target, size_t count) {
+@@ -1165,7 +1166,7 @@ writeRandomBytes_rand_s(void *target, size_t count) {
  
  #endif /* _WIN32 */
  
@@ -182,7 +171,7 @@ index 086fca5..12fbe36 100644
  
  static unsigned long
  gather_time_entropy(void) {
-@@ -1208,6 +1209,9 @@ generate_hash_secret_salt(XML_Parser parser) {
+@@ -1210,6 +1211,9 @@ generate_hash_secret_salt(XML_Parser parser) {
  #if defined(HAVE_ARC4RANDOM_BUF)
    arc4random_buf(&entropy, sizeof(entropy));
    return ENTROPY_DEBUG("arc4random_buf", entropy);
