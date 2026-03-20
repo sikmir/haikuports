@@ -1,14 +1,14 @@
-From 97886ee563bd753aac6097ada84b0eb830261092 Mon Sep 17 00:00:00 2001
+From 658f043c264f1889c685d4d11f8f08f7757ae5ba Mon Sep 17 00:00:00 2001
 From: Jerome Duval <jerome.duval@gmail.com>
 Date: Wed, 7 Aug 2019 16:21:12 +0300
 Subject: disable ebx on x86.
 
 
 diff --git a/configure b/configure
-index d77a55b..dcec060 100755
+index 98b582a..b79a36b 100755
 --- a/configure
 +++ b/configure
-@@ -7713,6 +7713,7 @@ case $target_os in
+@@ -7734,6 +7734,7 @@ case $target_os in
  haiku)
      disable memalign
      disable posix_memalign
@@ -17,10 +17,10 @@ index d77a55b..dcec060 100755
  *-dos|freedos|opendos)
      if test_cpp_condition sys/version.h "defined(__DJGPP__) && __DJGPP__ == 2 && __DJGPP_MINOR__ == 5"; then
 -- 
-2.45.2
+2.52.0
 
 
-From 77c68630eb4df107b203069834ceb4c0282435de Mon Sep 17 00:00:00 2001
+From 36f56d2066e1d67ee8c4ae70b620a9549f93b40c Mon Sep 17 00:00:00 2001
 From: Adrien Destugues <pulkomandy@pulkomandy.tk>
 Date: Wed, 7 Aug 2019 16:21:32 +0300
 Subject: Re-enable memalign for Haiku
@@ -32,10 +32,10 @@ If there are still problems with it we should rather fix them on Haiku
 side.
 
 diff --git a/configure b/configure
-index dcec060..dd49c98 100755
+index b79a36b..39c9d5a 100755
 --- a/configure
 +++ b/configure
-@@ -7711,8 +7711,6 @@ enabled threads || warn \
+@@ -7732,8 +7732,6 @@ enabled threads || warn \
  
  case $target_os in
  haiku)
@@ -45,10 +45,10 @@ index dcec060..dd49c98 100755
      ;;
  *-dos|freedos|opendos)
 -- 
-2.45.2
+2.52.0
 
 
-From db3f1e7c68270a3d04ad502f4ea4dcb524f4c35b Mon Sep 17 00:00:00 2001
+From db3ec7b5c1af1824337d53f7a5c48e53c1c1aa52 Mon Sep 17 00:00:00 2001
 From: Augustin Cavalier <waddlesplash@gmail.com>
 Date: Fri, 21 Feb 2025 14:12:40 -0500
 Subject: libavutil: Forcibly enable use of pthread_setname_np.
@@ -75,10 +75,10 @@ index 2c00c7c..98f6edb 100644
  
  #include <stdlib.h>
 -- 
-2.45.2
+2.52.0
 
 
-From b7fb1edbcb4fd3f92fc5de7121a064059f9ff46c Mon Sep 17 00:00:00 2001
+From 3d9a9a92044cd6c2187cea2f49caddd00094222c Mon Sep 17 00:00:00 2001
 From: Augustin Cavalier <waddlesplash@gmail.com>
 Date: Fri, 21 Feb 2025 14:35:08 -0500
 Subject: libavutil: Give slicethreads names.
@@ -98,5 +98,5 @@ index e6b82e3..4e240da 100644
      pthread_cond_signal(&w->cond);
  
 -- 
-2.45.2
+2.52.0
 
