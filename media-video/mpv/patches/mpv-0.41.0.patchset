@@ -1,14 +1,14 @@
-From d6a7cefc41f74d062d6487b642c4375113fe5213 Mon Sep 17 00:00:00 2001
+From 1df1f414bf00e5b18e2ca607ca72ab4fd82d4ce9 Mon Sep 17 00:00:00 2001
 From: Gerasim Troeglazov <3dEyes@gmail.com>
 Date: Wed, 6 Mar 2024 21:40:44 +1000
 Subject: disable setlocale for haiku
 
 
 diff --git a/player/main.c b/player/main.c
-index 48d29b5..45ef5e6 100644
+index 37eb6b1..69fc08d 100644
 --- a/player/main.c
 +++ b/player/main.c
-@@ -234,8 +234,12 @@ static int cfg_include(void *ctx, char *filename, int flags)
+@@ -249,8 +249,12 @@ static int cfg_include(void *ctx, char *filename, int flags)
  // Other locale stuff might break too, but probably isn't too bad.
  static bool check_locale(void)
  {
@@ -22,10 +22,10 @@ index 48d29b5..45ef5e6 100644
  
  struct MPContext *mp_create(void)
 -- 
-2.45.2
+2.52.0
 
 
-From b40045bd89d35307ed0de124c1777e34fe726ff7 Mon Sep 17 00:00:00 2001
+From 545b49f2c569320dde10d785ec5347ccf6346051 Mon Sep 17 00:00:00 2001
 From: Oscar Lesta <oscar.lesta@gmail.com>
 Date: Thu, 11 May 2023 21:00:50 -0300
 Subject: Fix build on Haiku
@@ -33,10 +33,10 @@ Subject: Fix build on Haiku
 Just adapting previous patch from Sergei Reznikov.
 
 diff --git a/osdep/threads-posix.h b/osdep/threads-posix.h
-index 4b3bb90..6ff96ea 100644
+index cce64b1..5bea622 100644
 --- a/osdep/threads-posix.h
 +++ b/osdep/threads-posix.h
-@@ -242,7 +242,7 @@ static inline void mp_thread_set_name(const char *name)
+@@ -232,7 +232,7 @@ static inline void mp_thread_set_name(const char *name)
  
  static inline int64_t mp_thread_cpu_time_ns(mp_thread_id thread)
  {
@@ -46,17 +46,17 @@ index 4b3bb90..6ff96ea 100644
      struct timespec ts;
      if (pthread_getcpuclockid(thread, &id) == 0 && clock_gettime(id, &ts) == 0)
 -- 
-2.45.2
+2.52.0
 
 
-From d8864f0ffa9efb3c18b614529bb78b6daa543fe8 Mon Sep 17 00:00:00 2001
+From f60c9b8cf333fe0a323941da2d19540d6f801a3a Mon Sep 17 00:00:00 2001
 From: Gerasim Troeglazov <3dEyes@gmail.com>
 Date: Sun, 31 Mar 2024 00:52:47 +1000
 Subject: Add Haiku video output module
 
 
 diff --git a/meson.build b/meson.build
-index 2c2246b..d828418 100644
+index fb10be5..4db8333 100644
 --- a/meson.build
 +++ b/meson.build
 @@ -1,5 +1,5 @@
@@ -64,10 +64,10 @@ index 2c2246b..d828418 100644
 -        'c',
 +        'c', 'cpp',
          license: ['GPL2+', 'LGPL2.1+'],
-         version: files('./VERSION'),
-         meson_version: '>=0.62.0',
-@@ -959,6 +959,12 @@ if features['sdl2-video']
-     sources += files('video/out/vo_sdl.c')
+         version: files('./MPV_VERSION'),
+         meson_version: '>=1.3.0',
+@@ -995,6 +995,12 @@ if features['sdl2-video']
+     dependencies += sdl2
  endif
  
 +features += {'haiku': get_option('haiku').allowed()}
@@ -79,23 +79,23 @@ index 2c2246b..d828418 100644
  shaderc = dependency('shaderc', required:
      get_option('shaderc').require(features['win32-desktop']))
  features += {'shaderc': shaderc.found()}
-diff --git a/meson_options.txt b/meson_options.txt
-index e488f6e..d094132 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -76,6 +76,7 @@ option('gl-dxinterop', type: 'feature', value: 'auto', description: 'OpenGL/Dire
+diff --git a/meson.options b/meson.options
+index 52782f7..b8ee958 100644
+--- a/meson.options
++++ b/meson.options
+@@ -77,6 +77,7 @@ option('gl-dxinterop', type: 'feature', value: 'auto', description: 'OpenGL/Dire
  option('gl-win32', type: 'feature', value: 'auto', description: 'OpenGL Win32 backend')
  option('gl-x11', type: 'feature', value: 'disabled', description: 'OpenGL X11/GLX (deprecated/legacy)')
- option('sdl2-video', type: 'feature', value: 'auto', description: 'SDL2 video output')
+ option('sdl2-video', type: 'feature', value: 'disabled', description: 'SDL2 video output')
 +option('haiku', type: 'feature', value: 'enabled', description: 'Haiku video output')
  option('shaderc', type: 'feature', value: 'auto', description: 'libshaderc SPIR-V compiler')
  option('sixel', type: 'feature', value:'auto', description: 'Sixel video output')
  option('spirv-cross', type: 'feature', value: 'auto', description: 'SPIRV-Cross SPIR-V shader converter')
 diff --git a/options/m_option.h b/options/m_option.h
-index 530c0a3..5285dd9 100644
+index c6ebdb7..d3fdecd 100644
 --- a/options/m_option.h
 +++ b/options/m_option.h
-@@ -264,8 +264,11 @@ union m_option_value {
+@@ -271,8 +271,11 @@ union m_option_value {
  // Keep fully zeroed instance of m_option_value to use as a default value, before
  // any specific union member is used. C standard says that `= {0}` activates and
  // initializes only the first member of the union, leaving padding bits undefined.
@@ -109,7 +109,7 @@ index 530c0a3..5285dd9 100644
  
  struct m_option_action {
 diff --git a/video/out/vo.c b/video/out/vo.c
-index db29690..5761a75 100644
+index c9cde30..d3dc520 100644
 --- a/video/out/vo.c
 +++ b/video/out/vo.c
 @@ -54,6 +54,7 @@ extern const struct vo_driver video_out_gpu;
@@ -120,7 +120,7 @@ index db29690..5761a75 100644
  extern const struct vo_driver video_out_image;
  extern const struct vo_driver video_out_lavc;
  extern const struct vo_driver video_out_caca;
-@@ -95,6 +96,9 @@ static const struct vo_driver *const video_out_drivers[] =
+@@ -97,6 +98,9 @@ static const struct vo_driver *const video_out_drivers[] =
  #if HAVE_VAAPI_X11 && HAVE_GPL
      &video_out_vaapi,
  #endif
@@ -638,20 +638,20 @@ index 0000000..cc3c4a9
 +	};
 +}
 -- 
-2.45.2
+2.52.0
 
 
-From 32ffd041d9156e1eb7841967f6f64281cc0fc965 Mon Sep 17 00:00:00 2001
+From bec7666d84b62f96d7116fc865133e0c4bb19baf Mon Sep 17 00:00:00 2001
 From: Gerasim Troeglazov <3dEyes@gmail.com>
 Date: Sun, 31 Mar 2024 04:03:26 +0000
 Subject: Use _Static_assert
 
 
 diff --git a/audio/out/ao_audiotrack.c b/audio/out/ao_audiotrack.c
-index db1da9c..7c132bc 100644
+index f483ccc..b3d6224 100644
 --- a/audio/out/ao_audiotrack.c
 +++ b/audio/out/ao_audiotrack.c
-@@ -690,7 +690,7 @@ static int init(struct ao *ao)
+@@ -709,7 +709,7 @@ static int init(struct ao *ao)
          AudioFormat.CHANNEL_OUT_5POINT1 | AudioFormat.CHANNEL_OUT_BACK_CENTER,
          AudioFormat.CHANNEL_OUT_7POINT1_SURROUND,
      };
@@ -661,16 +661,16 @@ index db1da9c..7c132bc 100644
          p->channel_config = AudioFormat.CHANNEL_OUT_STEREO;
      } else {
 diff --git a/video/out/vo_gpu_next.c b/video/out/vo_gpu_next.c
-index 0a93f63..a162ba2 100644
+index 2d95eb8..ca49265 100644
 --- a/video/out/vo_gpu_next.c
 +++ b/video/out/vo_gpu_next.c
-@@ -1470,14 +1470,14 @@ done:
+@@ -1759,14 +1759,14 @@ done:
  
  static inline void copy_frame_info_to_mp(struct frame_info *pl,
                                           struct mp_frame_perf *mp) {
 -    static_assert(MP_ARRAY_SIZE(pl->info) == MP_ARRAY_SIZE(mp->perf), "");
 +    _Static_assert(MP_ARRAY_SIZE(pl->info) == MP_ARRAY_SIZE(mp->perf), "");
-     assert(pl->count <= VO_PASS_PERF_MAX);
+     mp_assert(pl->count <= VO_PASS_PERF_MAX);
      mp->count = MPMIN(pl->count, VO_PASS_PERF_MAX);
  
      for (int i = 0; i < mp->count; ++i) {
@@ -678,11 +678,11 @@ index 0a93f63..a162ba2 100644
  
 -        static_assert(VO_PERF_SAMPLE_COUNT >= MP_ARRAY_SIZE(pass->samples), "");
 +        _Static_assert(VO_PERF_SAMPLE_COUNT >= MP_ARRAY_SIZE(pass->samples), "");
-         assert(pass->num_samples <= MP_ARRAY_SIZE(pass->samples));
+         mp_assert(pass->num_samples <= MP_ARRAY_SIZE(pass->samples));
  
          struct mp_pass_perf *perf = &mp->perf[i];
 diff --git a/video/zimg.c b/video/zimg.c
-index 907e81d..24f733c 100644
+index 2e176e5..c4cf971 100644
 --- a/video/zimg.c
 +++ b/video/zimg.c
 @@ -32,7 +32,7 @@
@@ -695,20 +695,20 @@ index 907e81d..24f733c 100644
  #define HAVE_ZIMG_ALPHA (ZIMG_API_VERSION >= ZIMG_MAKE_API_VERSION(2, 4))
  
 -- 
-2.45.2
+2.52.0
 
 
-From 3a8b15620cf338f72f449dbad49eae86d004d1d3 Mon Sep 17 00:00:00 2001
+From 34dcfb9031bab2f451efbc0b29f2c060a54f5de8 Mon Sep 17 00:00:00 2001
 From: Schrijvers Luc <begasus@gmail.com>
 Date: Tue, 21 May 2024 13:57:25 +0200
 Subject: More build fixes
 
 
 diff --git a/options/m_option.c b/options/m_option.c
-index 4646510..c4b4be9 100644
+index 3d2f597..4f34dea 100644
 --- a/options/m_option.c
 +++ b/options/m_option.c
-@@ -3786,7 +3786,7 @@ static void dup_node(void *ta_parent, struct mpv_node *node)
+@@ -3896,7 +3896,7 @@ static void dup_node(void *ta_parent, struct mpv_node *node)
  
  static void copy_node(const m_option_t *opt, void *dst, const void *src)
  {
@@ -718,10 +718,10 @@ index 4646510..c4b4be9 100644
      if (!(dst && src))
          return;
 diff --git a/osdep/threads-posix.h b/osdep/threads-posix.h
-index 6ff96ea..62b3fd9 100644
+index 5bea622..6c591ed 100644
 --- a/osdep/threads-posix.h
 +++ b/osdep/threads-posix.h
-@@ -227,7 +227,7 @@ static inline int mp_cond_timedwait_until(mp_cond *cond, mp_mutex *mutex, int64_
+@@ -217,7 +217,7 @@ static inline int mp_cond_timedwait_until(mp_cond *cond, mp_mutex *mutex, int64_
  
  static inline void mp_thread_set_name(const char *name)
  {
@@ -731,10 +731,10 @@ index 6ff96ea..62b3fd9 100644
          char tname[16] = {0}; // glibc-checked kernel limit
          strncpy(tname, name, sizeof(tname) - 1);
 diff --git a/sub/osd.c b/sub/osd.c
-index d33aabd..96a4773 100644
+index 2788897..e94f675 100644
 --- a/sub/osd.c
 +++ b/sub/osd.c
-@@ -119,7 +119,7 @@ bool osd_res_equals(struct mp_osd_res a, struct mp_osd_res b)
+@@ -156,7 +156,7 @@ bool osd_res_equals(struct mp_osd_res a, struct mp_osd_res b)
  
  struct osd_state *osd_create(struct mpv_global *global)
  {
@@ -744,20 +744,20 @@ index d33aabd..96a4773 100644
      struct osd_state *osd = talloc_zero(NULL, struct osd_state);
      *osd = (struct osd_state) {
 -- 
-2.45.2
+2.52.0
 
 
-From 349652a6c6877d3379c753e6fa36598d8e7505ef Mon Sep 17 00:00:00 2001
+From 3e987e3d10819853abf064663e17680b4a069f27 Mon Sep 17 00:00:00 2001
 From: Schrijvers Luc <begasus@gmail.com>
 Date: Fri, 16 Aug 2024 11:42:47 +0200
 Subject: Fix building support for dvdnav
 
 
 diff --git a/stream/stream_dvdnav.c b/stream/stream_dvdnav.c
-index 5dba92a..fd7f373 100644
+index 38af9fd..004a4d2 100644
 --- a/stream/stream_dvdnav.c
 +++ b/stream/stream_dvdnav.c
-@@ -497,7 +497,7 @@ static int control(stream_t *stream, int cmd, void *arg)
+@@ -516,7 +516,7 @@ static int control(stream_t *stream, int cmd, void *arg)
          struct stream_dvd_info_req *req = arg;
          memset(req, 0, sizeof(*req));
          req->num_subs = mp_dvdnav_number_of_subs(stream);
@@ -767,5 +767,104 @@ index 5dba92a..fd7f373 100644
          return STREAM_OK;
      }
 -- 
-2.45.2
+2.52.0
+
+
+From dec1951f174aba1789724eec0f9f29622058a321 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?M=C3=A1ximo=20Casta=C3=B1eda?= <antiswen@yahoo.es>
+Date: Wed, 18 Mar 2026 18:13:00 +0100
+Subject: Fix build
+
+See ee07dcf4c704e64d3d9d95191129bccd98c2c37d
+and 91c1b65de09fb8b449fb6ffef32c120ba6325e7e
+
+diff --git a/video/out/vo_haiku.cpp b/video/out/vo_haiku.cpp
+index cc3c4a9..fea0d23 100644
+--- a/video/out/vo_haiku.cpp
++++ b/video/out/vo_haiku.cpp
+@@ -179,7 +179,7 @@ VideoView::MouseMoved(BPoint point, uint32 transit,const BMessage *message)
+ 	switch (transit)
+ 	{
+ 		case B_INSIDE_VIEW:
+-			mp_input_set_mouse_pos(v_out->input_ctx, point.x, point.y);
++			mp_input_set_mouse_pos(v_out->input_ctx, point.x, point.y, false);
+ 			break;
+ 		case B_ENTERED_VIEW:
+ 			mp_input_put_key(v_out->input_ctx, MP_KEY_MOUSE_ENTER);
+@@ -406,10 +406,13 @@ static void set_fullscreen(struct vo *vo)
+ 	vc->window->SetFullscreen(fs);
+ }
+ 
+-static void draw_frame(struct vo *vo, struct vo_frame *frame)
++static bool draw_frame(struct vo *vo, struct vo_frame *frame)
+ {
++	// TODO: we might be allowed to do nothing and return false when the window
++	// is hidden or minimized.
+ 	struct priv *vc = (priv*)vo->priv;
+ 	vc->window->View()->SetBits(frame);
++	return true;
+ }
+ 
+ static void flip_page(struct vo *vo)
+-- 
+2.52.0
+
+
+From b498e92fec46f412a73dada7fc834a8d077159e9 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?M=C3=A1ximo=20Casta=C3=B1eda?= <antiswen@yahoo.es>
+Date: Wed, 18 Mar 2026 18:28:37 +0100
+Subject: Fix some videos being "scrambled"
+
+For performance reasons, mpv may use padding in its image data.
+
+diff --git a/video/out/vo_haiku.cpp b/video/out/vo_haiku.cpp
+index fea0d23..37f6f68 100644
+--- a/video/out/vo_haiku.cpp
++++ b/video/out/vo_haiku.cpp
+@@ -243,7 +243,14 @@ VideoView::SetBits(struct vo_frame *frame)
+ 		buffer_bitmap = new BBitmap(BRect(0, 0, frame->current->w - 1, frame->current->h - 1), B_RGB32);
+ 	}
+ 
+-	memcpy(buffer_bitmap->Bits(), frame->current->planes[0], buffer_bitmap->BitsLength());
++	int frame_stride = frame->current->stride[0];
++	int bitmap_stride = buffer_bitmap->BytesPerRow();
++	if (frame_stride == bitmap_stride) {
++		memcpy(buffer_bitmap->Bits(), frame->current->planes[0], buffer_bitmap->BitsLength());
++	} else {
++		buffer_bitmap->ImportBits(frame->current->planes[0], frame_stride * frame->current->h,
++			frame_stride, 0, B_RGB32);
++	}
+ }
+ 
+ VideoWindow::VideoWindow(int width, int height, const char* title, struct vo* vout)
+-- 
+2.52.0
+
+
+From 0a5ff33c1fa84dbed9e2ce5090d6ba6740d99a61 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?M=C3=A1ximo=20Casta=C3=B1eda?= <antiswen@yahoo.es>
+Date: Wed, 18 Mar 2026 19:50:13 +0100
+Subject: Fix some videos not being displayed without resizing the window
+
+We are calculating the source and destination rectangles when the window
+is resized. If we got a 640x480 video, there was no resize event and
+thus we were displaying a 0x0 video in a 0x0 area.
+
+diff --git a/video/out/vo_haiku.cpp b/video/out/vo_haiku.cpp
+index 37f6f68..78a198a 100644
+--- a/video/out/vo_haiku.cpp
++++ b/video/out/vo_haiku.cpp
+@@ -459,7 +459,9 @@ static int preinit(struct vo *vo)
+ 	if (be_app == NULL)
+ 		be_app = new BApplication("application/x-vnd.mpv.io-mpv");
+ 
+-	vc->window = new VideoWindow(640, 480, "MPV Video Output", vo);
++	// Use a stupid size so that we do get a FrameResized on first (and posibly
++	// only) reconfig. We are doing stuff there that we shouldn't.
++	vc->window = new VideoWindow(0, 0, "MPV Video Output", vo);
+ 	vc->window->Show();
+ 
+     return 0;
+-- 
+2.52.0
 

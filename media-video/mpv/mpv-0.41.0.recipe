@@ -5,17 +5,15 @@ types."
 HOMEPAGE="https://mpv.io/"
 COPYRIGHT="2013-2024 MPV Developers"
 LICENSE="GNU GPL v2"
-REVISION="5"
+REVISION="1"
 SOURCE_URI="https://github.com/mpv-player/mpv/archive/v$portVersion.tar.gz"
-CHECKSUM_SHA256="86d9ef40b6058732f67b46d0bbda24a074fae860b3eaae05bab3145041303066"
+CHECKSUM_SHA256="ee21092a5ee427353392360929dc64645c54479aefdb5babc5cfbb5fad626209"
 SOURCE_FILENAME="mpv-$portVersion.tar.gz"
 PATCHES="mpv-$portVersion.patchset"
 ADDITIONAL_FILES="mpv.rdef.in"
 
 ARCHITECTURES="all !x86_gcc2"
 SECONDARY_ARCHITECTURES="x86"
-
-GLOBAL_WRITABLE_FILES="settings/mpv/encoding-profiles.conf keep-old"
 
 commandSuffix=$secondaryArchSuffix
 commandBinDir=$binDir
@@ -25,7 +23,7 @@ if [ "$targetArchitecture" = x86_gcc2 ]; then
 fi
 
 portVersionCompat="$portVersion compat >= ${portVersion%.*}"
-libVersion="2.3.0"
+libVersion="2.5.0"
 libVersionCompat="$libVersion compat >= ${libVersion%%.*}"
 
 PROVIDES="
@@ -68,7 +66,7 @@ PROVIDES_devel="
 REQUIRES_devel="
 	haiku$secondaryArchSuffix
 	mpv$secondaryArchSuffix == $portVersion base
-	ffmpeg5${secondaryArchSuffix}_devel
+	ffmpeg6${secondaryArchSuffix}_devel
 	devel:libass$secondaryArchSuffix
 	devel:libbluray$secondaryArchSuffix
 	devel:libcdio_paranoia$secondaryArchSuffix
@@ -98,7 +96,7 @@ REQUIRES_devel="
 
 BUILD_REQUIRES="
 	haiku${secondaryArchSuffix}_devel
-	ffmpeg5${secondaryArchSuffix}_devel
+	ffmpeg6${secondaryArchSuffix}_devel
 	devel:libass$secondaryArchSuffix
 	devel:libbluray$secondaryArchSuffix
 	devel:libcdio_paranoia$secondaryArchSuffix
@@ -138,10 +136,10 @@ BUILD_PREREQUIRES="
 BUILD()
 {
 	LDFLAGS="-lnetwork -lbe" \
-	meson Build \
+	meson setup Build \
 		--buildtype=release \
 		--prefix="$prefix" \
-		--bindir="$binDir" \
+		--bindir="$commandBinDir" \
 		--libdir="$libDir" \
 		--includedir="$includeDir" \
 		--datadir="$dataDir" \
