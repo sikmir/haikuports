@@ -1,0 +1,47 @@
+SUMMARY="Ball-and-wall puzzle game inspired by JezzBall"
+DESCRIPTION="Draw lines to divide the playing field while avoiding bouncing \
+balls. Capture 75% of the field to advance to the next level.
+Features three difficulty levels, high score tracking, colorful per-pixel \
+rendered 3D spinning balls, and ball-to-ball collision physics."
+HOMEPAGE="https://github.com/D3codes/Jezziku"
+COPYRIGHT="2026 D3codes"
+LICENSE="MIT"
+REVISION="2"
+SOURCE_URI="$HOMEPAGE/archive/v$portVersion.tar.gz"
+CHECKSUM_SHA256="3ebdb28d128e234e59fdbeddf56bea37150160a715e55a2105d1b3cd72a23512"
+SOURCE_DIR="Jezziku-$portVersion"
+
+ARCHITECTURES="all !x86_gcc2"
+SECONDARY_ARCHITECTURES="x86"
+
+USER_SETTINGS_FILES="
+	settings/Jezziku directory
+	"
+
+PROVIDES="
+	jezziku$secondaryArchSuffix = $portVersion
+	app:Jezziku = $portVersion
+	"
+REQUIRES="
+	haiku$secondaryArchSuffix
+	"
+
+BUILD_REQUIRES="
+	haiku${secondaryArchSuffix}_devel
+	"
+BUILD_PREREQUIRES="
+	cmd:g++$secondaryArchSuffix
+	cmd:make
+	"
+
+BUILD()
+{
+	make $jobArgs
+}
+
+INSTALL()
+{
+	mkdir -p $appsDir
+	cp Jezziku $appsDir/Jezziku
+	addAppDeskbarSymlink $appsDir/Jezziku
+}
