@@ -1,0 +1,52 @@
+SUMMARY="A fast and flexible static site generator in Go"
+DESCRIPTION="Hugo is one of the most popular open-source static site generators. \
+With its amazing speed and flexibility, Hugo makes building websites fun again."
+HOMEPAGE="https://github.com/gohugoio/hugo"
+COPYRIGHT="2017-2026 The Hugo Authors"
+LICENSE="Apache v2"
+REVISION="1"
+SOURCE_URI="https://github.com/gohugoio/hugo/archive/v$portVersion.tar.gz"
+CHECKSUM_SHA256="4fc3aecd14bf24bc8a18eb3337465640fecad91c83876fe26ba5fa1ae9fb6f1e"
+
+ARCHITECTURES="?x86_64"
+
+PROVIDES="
+	hugo = $portVersion
+	cmd:hugo
+	"
+REQUIRES="
+	haiku
+	"
+
+BUILD_REQUIRES="
+	haiku_devel
+	"
+BUILD_PREREQUIRES="
+	cmd:git
+	cmd:go
+	"
+
+BUILD()
+{
+	export GOPROXY=direct GOPATH=$sourceDir/../go GOROOT=/system/develop/lib/go GOSUMDB=off GOCACHE=$sourceDir/../gocache
+	export GOFLAGS="-trimpath -mod=readonly -modcacherw"
+	go mod edit -replace golang.org/x/sys=github.com/korli/sys_haiku@master-haiku \
+		-replace github.com/tetratelabs/wazero=github.com/korli/wazero_haiku@37996e2 \
+		-replace github.com/rogpeppe/go-internal=github.com/korli/go-internal_haiku@6c71f5e8794 \
+		-replace github.com/mattn/go-isatty=github.com/korli/go-isatty_haiku@72d89686b7 \
+		-replace github.com/spf13/afero=github.com/korli/afero_haiku@67be62a78797 \
+		-replace github.com/bep/mclib=github.com/korli/mclib_haiku@0dc1a6ff05
+	go mod tidy -e
+	go build -ldflags="-s -w -buildid=''"
+
+	./hugo gen man
+	./hugo completion bash > hugo.bash-completion
+}
+
+INSTALL()
+{
+	mkdir -p $binDir $manDir/man1 $dataDir/bash-completion/completions
+	cp hugo $binDir
+	cp man/*.1 $manDir/man1/
+	install -Dm 644 hugo.bash-completion $dataDir/bash-completion/completions/hugo
+}
