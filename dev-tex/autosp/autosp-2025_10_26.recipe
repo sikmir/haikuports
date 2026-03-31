@@ -6,11 +6,11 @@ values themselves, with \\sk spacing commands inserted as necessary. The coding 
 measure can be entered one part at a time, without concern for note-spacing changes within the \
 part or spacing requirements of other parts."
 HOMEPAGE="https://ctan.org/pkg/autosp"
-COPYRIGHT="2014–2023 Bob Tennent"
+COPYRIGHT="2014–2025 Bob Tennent"
 LICENSE="GNU GPL v2"
 REVISION="1"
 SOURCE_URI="https://mirrors.ctan.org/support/autosp/source/autosp-${portVersion//_/-}.tar.gz"
-CHECKSUM_SHA256="b5d797216efecbcc36617c338d41daecc9195c416e1279a0bf0a3eb26f51ca92"
+CHECKSUM_SHA256="a3688176b2bb189134e3c3500f03702f29c1947414765cb9a3e69fccd6fff32d"
 SOURCE_DIR="autosp-${portVersion//_/-}"
 
 ARCHITECTURES="all"
@@ -29,6 +29,8 @@ BUILD_REQUIRES="
 	haiku_devel
 	"
 BUILD_PREREQUIRES="
+	cmd:autoconf
+	cmd:automake
 	cmd:awk
 	cmd:gcc
 	cmd:make
@@ -45,6 +47,7 @@ defineDebugInfoPackage autosp \
 
 BUILD()
 {
+	autoreconf -fi
 	runConfigure ./configure
 	# override default cflags for gcc2 support
 	make $jobArgs AM_CFLAGS="-fno-common -ansi -Wall -Werror"
