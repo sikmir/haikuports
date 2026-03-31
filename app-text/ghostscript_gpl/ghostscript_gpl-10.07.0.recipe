@@ -5,11 +5,11 @@ languages. Its main purposes are the rasterization or rendering of such page \
 description language files, for the display or printing of document pages, and \
 the conversion between PostScript and PDF files."
 HOMEPAGE="https://ghostscript.com/"
-COPYRIGHT="2001-2025 Artifex Software, Inc."
+COPYRIGHT="2001-2026 Artifex Software, Inc."
 LICENSE="AGPL-3.0"
 REVISION="1"
 SOURCE_URI="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs${portVersion//./}/ghostscript-$portVersion.tar.xz"
-CHECKSUM_SHA256="64352648c2c081c8a9fb1a12dc1965e01ead7c57f58b72d1b54f6ef1cef3c561"
+CHECKSUM_SHA256="ddace4e1721f967a55039baff564840225e0baa1d4f5432247ca1ccd1473b7c1"
 SOURCE_DIR="ghostscript-$portVersion"
 PATCHES="ghostscript_gpl-$portVersion.patchset"
 
