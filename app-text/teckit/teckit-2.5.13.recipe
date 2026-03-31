@@ -14,8 +14,8 @@ LICENSE="CPL v0.5
 	GNU LGPL v2.1
 	MPL v2.0"
 REVISION="1"
-SOURCE_URI="https://github.com/silnrsi/teckit/releases/download/v$portVersion/teckit-$portVersion.tar.gz"
-CHECKSUM_SHA256="6823fb3142efa34e5d74de35d37cdf4724efbf577f5ff15a8e2b364e6ef47d3d"
+SOURCE_URI="https://github.com/silnrsi/teckit/releases/download/v$portVersion/teckit-$portVersion.tar.xz"
+CHECKSUM_SHA256="3f55cd3670f1ff1a439d5a40071870b9e4ca2be8877a0eb80e24783cb532b380"
 
 ARCHITECTURES="all !x86_gcc2"
 SECONDARY_ARCHITECTURES="x86"
@@ -25,11 +25,11 @@ libVersionCompat="$libVersion compat >= ${libVersion%%.*}"
 
 PROVIDES="
 	teckit$secondaryArchSuffix = $portVersion
-	lib:libTECkit$secondaryArchSuffix = $libVersionCompat
-	lib:libTECkit_Compiler$secondaryArchSuffix = $libVersionCompat
 	cmd:sfconv
 	cmd:teckit_compile
 	cmd:txtconv
+	lib:libTECkit$secondaryArchSuffix = $libVersionCompat
+	lib:libTECkit_Compiler$secondaryArchSuffix = $libVersionCompat
 	"
 REQUIRES="
 	haiku$secondaryArchSuffix
@@ -55,16 +55,30 @@ BUILD_REQUIRES="
 	devel:libz$secondaryArchSuffix
 	"
 BUILD_PREREQUIRES="
+	cmd:autoconf
+	cmd:automake
 	cmd:awk
 	cmd:gcc$secondaryArchSuffix
 	cmd:ld$secondaryArchSuffix
+	cmd:libtoolize$secondaryArchSuffix
 	cmd:make
 	cmd:pkg_config$secondaryArchSuffix
 	"
 
+defineDebugInfoPackage teckit$secondaryArchSuffix \
+	$prefix/bin/sfconv \
+	$prefix/bin/teckit_compile \
+	$prefix/bin/txtconv \
+	$libDir/libTECkit.so.$libVersion \
+	$libDir/libTECkit_Compiler.so.$libVersion
+
 BUILD()
 {
-	runConfigure ./configure --enable-final --disable-static
+	autoreconf -fi
+	runConfigure --omit-dirs "binDir" ./configure \
+		--bindir=$prefix/bin \
+		--enable-final \
+		--disable-static
 	make $jobArgs
 }
 
