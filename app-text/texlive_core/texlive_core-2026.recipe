@@ -9,9 +9,9 @@ LICENSE="GNU GPL v2"
 REVISION="1"
 
 #fullVersion is for full releases from a tarball once a year
-fullVersion=20250308
+fullVersion=20260301
 SOURCE_URI="ftp://tug.org/historic/systems/texlive/$portVersion/texlive-$fullVersion-source.tar.xz"
-CHECKSUM_SHA256="fffdb1a3d143c177a4398a2229a40d6a88f18098e5f6dcfd57648c9f2417490f"
+CHECKSUM_SHA256="cb120d314d3ceb23ac608af17ddd2c623afcf02331f400a0f25eead5b8ac1d70"
 SOURCE_DIR="texlive-$fullVersion-source"
 
 #svnVersion is for intermediate bug fix updates during the year
@@ -25,8 +25,8 @@ PATCHES="texlive_core-$portVersion.patchset"
 ARCHITECTURES="all !x86_gcc2"
 SECONDARY_ARCHITECTURES="x86"
 
-libkpathseaVersion="6.4.1"
-libptexencVersion="1.5.1"
+libkpathseaVersion="6.4.2"
+libptexencVersion="1.5.2"
 libsynctexVersion="2.0.0"
 libtexluaVersion="5.3.6"
 libtexluajitVersion="2.1.81742"
@@ -229,7 +229,6 @@ PROVIDES="
 	cmd:luaotfload_tool
 	cmd:luatex
 	cmd:lwarpmk
-	cmd:m_tx
 	cmd:mag
 	cmd:make4ht
 	cmd:makedtx
@@ -350,7 +349,9 @@ PROVIDES="
 	cmd:rubikrotation
 	cmd:rumakeindex
 	cmd:rungs
+	cmd:runtexfile
 	cmd:runtexshebang
+	cmd:show_pdf_tags
 	cmd:simpdftex
 	cmd:spix
 	cmd:splitindex
@@ -440,6 +441,7 @@ PROVIDES="
 	cmd:wovf2ovp
 	cmd:wovp2ovf
 	cmd:xdvipdfmx
+	cmd:xdvipsk
 	cmd:xelatex
 	cmd:xelatex_dev
 	cmd:xelatex_unsafe
@@ -640,6 +642,7 @@ defineDebugInfoPackage texlive_core$secondaryArchSuffix \
 	$prefix/bin/wovf2ovp \
 	$prefix/bin/wovp2ovf \
 	$prefix/bin/xdvipdfmx \
+	$prefix/bin/xdvipsk \
 	$prefix/bin/xetex \
 	$libDir/libkpathsea.so.$libkpathseaVersion \
 	$libDir/libptexenc.so.$libptexencVersion \
@@ -790,7 +793,7 @@ BUILD()
 		--disable-native-texlive-build \
 		--enable-shared --disable-static \
 		--with-banner-add="/Haiku" --with-editor='lpe +%d "%s"' \
-		--with-system-harfbauzz \
+		--with-system-harfbuzz \
 		--with-system-icu \
 		--with-system-graphite2 \
 		--with-system-zziplib \
@@ -806,7 +809,6 @@ BUILD()
 		--with-system-libpaper \
 		--with-system-zlib \
 		--with-system-libgs \
-		--with-system-harfbuzz \
 		--with-system-teckit \
 		--without-x \
 		--disable-chktex \
@@ -829,6 +831,7 @@ BUILD()
 		--disable-vlna \
 		--disable-xml2pmx \
 		--build=$HOST --host=$HOST
+		# --with-system-luajit is apparently broken (TODO: check next year)
 
 	# and make the damn thing!
 	make all $jobArgs
@@ -838,7 +841,7 @@ INSTALL()
 {
 	cd ../build
 	make install
-	# make texlinks creates broken symlinks :( see comment in BUILD()
+	# make texlinks creates broken symlinks :(
 	make texlinks
 
 	# remove useless libtool files
