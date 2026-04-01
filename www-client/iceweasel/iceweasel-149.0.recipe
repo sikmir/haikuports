@@ -3,11 +3,11 @@ DESCRIPTION="Iceweasel is an open source web browser. \
 It achieves balance between ease of use and customization, catering to the \
 needs of both casual and power users."
 HOMEPAGE="https://github.com/kenz-gelsoft/gecko-dev"
-COPYRIGHT="1995-2025 Mozilla Developers and Contributors"
+COPYRIGHT="1995-2026 Mozilla Developers and Contributors"
 LICENSE="MPL v2.0"
 REVISION="1"
 SOURCE_URI="https://ftp.mozilla.org/pub/firefox/releases/${portVersion}/source/firefox-${portVersion}.source.tar.xz"
-CHECKSUM_SHA256="e9678a0e8473923953e1dc312c37919068623b6aa20adade16266049258191eb"
+CHECKSUM_SHA256="b861fdee999d9b6404e1e865d6f707c41b4bded1b5ea62affc176288c1484b8a"
 SOURCE_DIR="firefox-$portVersion"
 PATCHES="
 	iceweasel-$portVersion.patchset
@@ -109,7 +109,7 @@ BUILD()
 	rm -f mozconfig
 	cp -f $portDir/additional-files/mozconfig_gcc mozconfig
 
-	export DISABLE_ASLR=1
+	#export DISABLE_ASLR=1
 	export MOZBUILD_STATE_PATH="$sourceDir/.mozconfig"
 	export RUSTFLAGS="-C link-arg=-Wl,--no-gc-sections"
 
@@ -161,7 +161,7 @@ INSTALL()
 	local APP_SIGNATURE="application/x-vnd.iceweasel"
 	local MAJOR="`echo "$portVersion" | cut -d. -f1`"
 	local MIDDLE="`echo "$portVersion" | cut -d. -f2`"
-	local MINOR="`echo "$portVersion" | cut -d. -f3`"
+	local MINOR="0"
 	local LONG_INFO="$SUMMARY"
 	sed \
 		-e "s|@APP_SIGNATURE@|$APP_SIGNATURE|" \
