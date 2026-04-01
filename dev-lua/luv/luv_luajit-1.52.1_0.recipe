@@ -7,6 +7,11 @@ REVISION="1"
 SOURCE_URI="https://github.com/luvit/luv/archive/refs/tags/${portVersion//_/-}.tar.gz"
 CHECKSUM_SHA256="e8b8774b31d24be4fcf2b021b90599ecccc8e476c61efcc59c3c10cab813a885"
 SOURCE_DIR="luv-${portVersion//_/-}"
+srcGitRev_2="64ed183ab243cdc737203e835892b4e6cb446e46"
+SOURCE_URI_2="https://github.com/lunarmodules/lua-compat-5.3/archive/$srcGitRev_2.tar.gz"
+CHECKSUM_SHA256_2="a646a752cb4639ea17823870b30a49a4072f980b9bc96e3d1f0b4c2e3d2be230"
+SOURCE_FILENAME_2="lua-compat-5.3-$srcGitRev_2.tar.gz"
+SOURCE_DIR_2="lua-compat-5.3-$srcGitRev_2"
 PATCHES="luv-$portVersion.patchset"
 
 ARCHITECTURES="all !x86_gcc2"
@@ -18,7 +23,7 @@ libVersion="$portVersion"
 libVersionCompat="$libVersion compat >= ${libVersion%%.*}"
 
 PROVIDES="
-	luv$secondaryArchSuffix = $portVersion
+	luv_luajit$secondaryArchSuffix = $portVersion
 	lib:libluv$secondaryArchSuffix = $libVersionCompat
 	"
 REQUIRES="
@@ -26,18 +31,21 @@ REQUIRES="
 	lib:liblua$secondaryArchSuffix
 	lib:libuv$secondaryArchSuffix
 	"
+CONFLICTS="
+	luv$secondaryArchSuffix
+	"
 
 PROVIDES_devel="
-	luv${secondaryArchSuffix}_devel = $portVersion
+	luv_luajit${secondaryArchSuffix}_devel = $portVersion
 	devel:libluv$secondaryArchSuffix = $libVersionCompat
 	"
 REQUIRES_devel="
-	luv$secondaryArchSuffix == $portVersion base
+	luv_luajit$secondaryArchSuffix == $portVersion base
 	"
 
 BUILD_REQUIRES="
 	haiku${secondaryArchSuffix}_devel
-	devel:liblua$secondaryArchSuffix >= 5.4
+	devel:libluajit_5.1$secondaryArchSuffix
 	devel:libuv$secondaryArchSuffix
 	"
 BUILD_PREREQUIRES="
@@ -47,15 +55,17 @@ BUILD_PREREQUIRES="
 	"
 
 TEST_REQUIRES="
-	cmd:lua5.4
+	cmd:luajit
 	"
 
 BUILD()
 {
-	LUAVERSION=$(lua -v | sed 's/Lua //' | head -c3)
+	rm -df deps/lua-compat-5.3
+	ln -sf $sourceDir2 deps/lua-compat-5.3
+
 	cmake \
 		-B build -S.\
-		-DWITH_LUA_ENGINE=Lua \
+		-DWITH_LUA_ENGINE=LuaJIT \
 		-DLUA_BUILD_TYPE=System \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DWITH_SHARED_LIBUV=ON \
@@ -70,7 +80,7 @@ BUILD()
 
 INSTALL()
 {
-	LUAVERSION=$(lua -v | sed 's/Lua //' | head -c3)
+	LUAVERSION="5.1"
 	make -C build install
 	make -C build BUILD_MODULE=0 install
 
@@ -82,5 +92,6 @@ INSTALL()
 
 TEST()
 {
-	make test LUA_TEST_BIN="lua"
+	LUAVERSION="5.1"
+	make test LUA_TEST_BIN="luajit"
 }
