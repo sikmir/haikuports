@@ -10,7 +10,7 @@ COPYRIGHT="2005–2025 Martin Gieseking"
 LICENSE="GNU GPL v3"
 REVISION="1"
 SOURCE_URI="https://github.com/mgieseki/dvisvgm/releases/download/$portVersion/dvisvgm-$portVersion.tar.gz"
-CHECKSUM_SHA256="5f04886933866f0eb7e776dfc74e2b42e35e43755eaa952f6e8e9900cdd50355"
+CHECKSUM_SHA256="26446bb3b10739ff0925c9e416b76d2d222075c9d5dcfafe6e214609d072ed1a"
 PATCHES="dvisvgm-$portVersion.patchset"
 
 ARCHITECTURES="all !x86_gcc2"
