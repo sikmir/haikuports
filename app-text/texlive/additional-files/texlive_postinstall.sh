@@ -1,4 +1,4 @@
-#!/bin/bash
+#!bash
 
 processList=$(ps)
 processCount=$(grep texlive_update.sh <<< "$processList" | wc -l)

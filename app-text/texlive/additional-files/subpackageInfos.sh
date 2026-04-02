@@ -101,6 +101,7 @@ PROVIDES_bibtexextra="
 	tex:bib2gls
 	tex:bib2qr
 	tex:bibarts
+	tex:bibbreeze
 	tex:bibcop
 	tex:biber
 	tex:biber_ms
@@ -191,6 +192,7 @@ PROVIDES_bibtexextra="
 	tex:citation_style_language
 	tex:citeall
 	tex:citeref
+	tex:citeright
 	tex:collref
 	tex:compactbib
 	tex:crossrefware
@@ -370,8 +372,10 @@ PROVIDES_binextra="
 	tex:ppmcheckpdf
 	tex:purifyeps
 	tex:pythontex
+	tex:runtexfile
 	tex:runtexshebang
 	tex:seetexk
+	tex:show_pdf_tags
 	tex:spix
 	tex:sqltex
 	tex:srcredact
@@ -401,6 +405,8 @@ PROVIDES_binextra="
 	tex:typeoutfileinfo
 	tex:upmendex
 	tex:web
+	tex:xdvipsk
+	tex:xdvipsk_support
 	tex:xindex
 	tex:xindy
 	tex:xpdfopen
@@ -442,14 +448,14 @@ REQUIRES_full_source+="
 	"
 subpackages+=(binextra_source)
 SUMMARY_context="TeX Collection: ConTeXt and packages"
-DESCRIPTION_context="Hans Hagen's powerful ConTeXt system, https://pragma-ade.com. Also includes third-party ConTeXt packages."
+DESCRIPTION_context="Hans Hagen's powerful ConTeXt system, https://pragma-ade.com. Also includes third-party ConTeXt packages. TeX Live uses the ConTeXt repackaging as distributed from https://github.com/gucci-on-fleek/context-packaging. See https://contextgarden.net and https://pragma-ade.com for information about ConTeXt.#"
 PROVIDES_context="
 	texlive_context = $portVersion
 	tex:context
+	tex:context_animation
 	tex:context_calendar_examples
 	tex:context_chat
 	tex:context_collating_marks
-	tex:context_companion_fonts
 	tex:context_cyrillicnumbers
 	tex:context_filter
 	tex:context_gnuplot
@@ -462,7 +468,6 @@ PROVIDES_context="
 	tex:context_simpleslides
 	tex:context_squares
 	tex:context_sudoku
-	tex:context_texlive
 	tex:context_transliterator
 	tex:context_typescripts
 	tex:context_vim
@@ -481,7 +486,7 @@ REQUIRES_full+="
 POST_INSTALL_SCRIPTS_context="$relativePostInstallDir/texlive_postinstall.sh"
 subpackages+=(context)
 SUMMARY_context_doc="TeX Collection: ConTeXt and packages (documentation)"
-DESCRIPTION_context_doc="Hans Hagen's powerful ConTeXt system, https://pragma-ade.com. Also includes third-party ConTeXt packages."
+DESCRIPTION_context_doc="Hans Hagen's powerful ConTeXt system, https://pragma-ade.com. Also includes third-party ConTeXt packages. TeX Live uses the ConTeXt repackaging as distributed from https://github.com/gucci-on-fleek/context-packaging. See https://contextgarden.net and https://pragma-ade.com for information about ConTeXt.#"
 PROVIDES_context_doc="
 	texlive_context_doc = $portVersion
 	"
@@ -494,7 +499,7 @@ REQUIRES_full_doc+="
 	"
 subpackages+=(context_doc)
 SUMMARY_context_source="TeX Collection: ConTeXt and packages (source files)"
-DESCRIPTION_context_source="Hans Hagen's powerful ConTeXt system, https://pragma-ade.com. Also includes third-party ConTeXt packages."
+DESCRIPTION_context_source="Hans Hagen's powerful ConTeXt system, https://pragma-ade.com. Also includes third-party ConTeXt packages. TeX Live uses the ConTeXt repackaging as distributed from https://github.com/gucci-on-fleek/context-packaging. See https://contextgarden.net and https://pragma-ade.com for information about ConTeXt.#"
 PROVIDES_context_source="
 	texlive_context_source = $portVersion
 	"
@@ -530,6 +535,7 @@ PROVIDES_fontsextra="
 	tex:arev
 	tex:arimo
 	tex:arsenal
+	tex:arsenal_math
 	tex:arvo
 	tex:asana_math
 	tex:asapsym
@@ -541,6 +547,7 @@ PROVIDES_fontsextra="
 	tex:auncial_new
 	tex:aurical
 	tex:b1encoding
+	tex:bahaistar
 	tex:barcodes
 	tex:baskervaldadf
 	tex:baskervaldx
@@ -662,6 +669,9 @@ PROVIDES_fontsextra="
 	tex:fonetika
 	tex:fontawesome
 	tex:fontawesome5
+	tex:fontawesome6
+	tex:fontawesome7
+	tex:fontawesomescaled
 	tex:fontmfizz
 	tex:fonts_churchslavonic
 	tex:fontscripts
@@ -718,6 +728,7 @@ PROVIDES_fontsextra="
 	tex:jamtimes
 	tex:jetbrainsmono_otf
 	tex:josefin
+	tex:juliamono
 	tex:junicode
 	tex:junicodevf
 	tex:kixfont
@@ -744,9 +755,11 @@ PROVIDES_fontsextra="
 	tex:linguisticspro
 	tex:lobster2
 	tex:logix
+	tex:luciole
 	tex:luwiantype
 	tex:lxfonts
 	tex:ly1
+	tex:lydtype
 	tex:magra
 	tex:marcellus
 	tex:mathabx
@@ -762,6 +775,7 @@ PROVIDES_fontsextra="
 	tex:missaali
 	tex:mlmodern
 	tex:mnsymbol
+	tex:monaspace_otf
 	tex:montserrat
 	tex:mpfonts
 	tex:mweights
@@ -793,6 +807,7 @@ PROVIDES_fontsextra="
 	tex:pacioli
 	tex:pagella_otf
 	tex:paratype
+	tex:pennstander_otf
 	tex:phaistos
 	tex:phonetic
 	tex:pigpen
@@ -832,6 +847,7 @@ PROVIDES_fontsextra="
 	tex:sourcesanspro
 	tex:sourceserifpro
 	tex:spectral
+	tex:splentinex
 	tex:srbtiks
 	tex:starfont
 	tex:staves
@@ -1116,6 +1132,7 @@ PROVIDES_games="
 	tex:crosswrd
 	tex:customdice
 	tex:egameps
+	tex:eigo
 	tex:gamebook
 	tex:gamebooklib
 	tex:go
@@ -1130,13 +1147,16 @@ PROVIDES_games="
 	tex:labyrinth
 	tex:logicpuzzle
 	tex:mahjong
+	tex:mathador
 	tex:maze
+	tex:multi_sudoku
 	tex:musikui
 	tex:nimsticks
 	tex:onedown
 	tex:othello
 	tex:othelloboard
 	tex:pas_crosswords
+	tex:pgf_go
 	tex:playcards
 	tex:psgo
 	tex:quizztex
@@ -1155,6 +1175,7 @@ PROVIDES_games="
 	tex:sudokubundle
 	tex:tangramtikz
 	tex:thematicpuzzle
+	tex:tictactoe
 	tex:tikz_triminos
 	tex:trivialpursuit
 	tex:twoxtwogame
@@ -1234,7 +1255,9 @@ PROVIDES_humanities="
 	tex:lexref
 	tex:ling_macros
 	tex:linguex
+	tex:linguistix
 	tex:liturg
+	tex:liturgy_cw
 	tex:metrix
 	tex:nnext
 	tex:opbible
@@ -1310,9 +1333,11 @@ PROVIDES_langarabic="
 	tex:arabic_book
 	tex:arabluatex
 	tex:arabtex
+	tex:awami
 	tex:bidi
 	tex:bidihl
 	tex:dad
+	tex:fariscovernew
 	tex:ghab
 	tex:hvarabic
 	tex:hyphen_arabic
@@ -1323,6 +1348,7 @@ PROVIDES_langarabic="
 	tex:kurdishlipsum
 	tex:lshort_persian
 	tex:luabidi
+	tex:mohe_book
 	tex:na_box
 	tex:parsimatn
 	tex:parsinevis
@@ -1393,6 +1419,8 @@ PROVIDES_langchinese="
 	tex:install_latex_guide_zh_cn
 	tex:latex_notes_zh_cn
 	tex:lshort_chinese
+	tex:luatex_cn
+	tex:lxgw_fonts
 	tex:nanicolle
 	tex:njurepo
 	tex:pgfornament_han
@@ -1528,6 +1556,7 @@ PROVIDES_langcyrillic="
 	tex:hyphen_belarusian
 	tex:hyphen_bulgarian
 	tex:hyphen_churchslavonic
+	tex:hyphen_kazakh
 	tex:hyphen_mongolian
 	tex:hyphen_russian
 	tex:hyphen_serbian
@@ -1982,6 +2011,7 @@ PROVIDES_langgerman="
 	tex:etdipa
 	tex:etoolbox_de
 	tex:fifinddo_info
+	tex:fragoli
 	tex:german
 	tex:germbib
 	tex:germkorr
@@ -2219,6 +2249,7 @@ PROVIDES_langjapanese="
 	tex:kanbun
 	tex:lshort_japanese
 	tex:luatexja
+	tex:luwa_ul
 	tex:mendex_doc
 	tex:morisawa
 	tex:outoruby
@@ -2387,6 +2418,7 @@ PROVIDES_langother="
 	tex:sanskrit_t1
 	tex:thaienum
 	tex:thaispec
+	tex:tuzuk
 	tex:unicode_alphabets
 	tex:velthuis
 	tex:vntex
@@ -2646,6 +2678,7 @@ PROVIDES_latex="
 	tex:letltxmacro
 	tex:ltxcmds
 	tex:ltxmisc
+	tex:lua_uni_algos
 	tex:mfnfss
 	tex:mptopdf
 	tex:natbib
@@ -2725,6 +2758,7 @@ PROVIDES_latexextra="
 	tex:adrconv
 	tex:advdate
 	tex:affilauthor
+	tex:afperpack
 	tex:akktex
 	tex:akletter
 	tex:alchemist
@@ -2774,7 +2808,10 @@ PROVIDES_latexextra="
 	tex:bashful
 	tex:basicarith
 	tex:bchart
+	tex:beamer_reveal
 	tex:beamer_rl
+	tex:beamer_theme_albi
+	tex:beamer_varbox
 	tex:beamer2thesis
 	tex:beamerappendixnote
 	tex:beameraudience
@@ -2784,8 +2821,12 @@ PROVIDES_latexextra="
 	tex:beamerposter
 	tex:beamersubframe
 	tex:beamertheme_arguelles
+	tex:beamertheme_bilkent_econ
+	tex:beamertheme_cleaneasy
+	tex:beamertheme_csh
 	tex:beamertheme_cuerna
 	tex:beamertheme_detlevcm
+	tex:beamertheme_durham
 	tex:beamertheme_epyt
 	tex:beamertheme_focus
 	tex:beamertheme_gotham
@@ -2799,6 +2840,7 @@ PROVIDES_latexextra="
 	tex:beamertheme_saintpetersburg
 	tex:beamertheme_simpledarkblue
 	tex:beamertheme_simpleplus
+	tex:beamertheme_spectrum
 	tex:beamertheme_tcolorbox
 	tex:beamertheme_trigon
 	tex:beamertheme_upenn_bc
@@ -2906,6 +2948,7 @@ PROVIDES_latexextra="
 	tex:circ
 	tex:circledsteps
 	tex:circledtext
+	tex:cistercian
 	tex:classics
 	tex:classpack
 	tex:clefval
@@ -3135,6 +3178,9 @@ PROVIDES_latexextra="
 	tex:egplot
 	tex:ehhline
 	tex:einfart
+	tex:elegantbook
+	tex:elegantnote
+	tex:elegantpaper
 	tex:elements
 	tex:ellipsis
 	tex:elmath
@@ -3160,7 +3206,9 @@ PROVIDES_latexextra="
 	tex:enumext
 	tex:enumitem
 	tex:enumitem_zref
+	tex:enumsub
 	tex:envbig
+	tex:envelope_letter
 	tex:enverb
 	tex:environ
 	tex:envlab
@@ -3182,6 +3230,7 @@ PROVIDES_latexextra="
 	tex:esindex
 	tex:esint
 	tex:esint_type1
+	tex:essaykit
 	tex:etaremune
 	tex:etextools
 	tex:etl
@@ -3238,6 +3287,7 @@ PROVIDES_latexextra="
 	tex:fgruler
 	tex:fifo_stack
 	tex:figsize
+	tex:figureversions
 	tex:filecontents
 	tex:filecontentsdef
 	tex:filedate
@@ -3253,6 +3303,7 @@ PROVIDES_latexextra="
 	tex:fixfoot
 	tex:fixme
 	tex:fixmetodonotes
+	tex:fixtounicode
 	tex:fjodor
 	tex:flabels
 	tex:flacards
@@ -3310,6 +3361,7 @@ PROVIDES_latexextra="
 	tex:fundus_calligra
 	tex:fundus_cyr
 	tex:fundus_sueterlin
+	tex:futharksymb
 	tex:fvextra
 	tex:fwlw
 	tex:g_brief
@@ -3352,6 +3404,7 @@ PROVIDES_latexextra="
 	tex:glossaries_serbian
 	tex:glossaries_slovene
 	tex:glossaries_spanish
+	tex:glossaries_ukrainian
 	tex:gmdoc
 	tex:gmdoc_enhance
 	tex:gmiflink
@@ -3462,7 +3515,7 @@ PROVIDES_latexextra="
 	tex:isonums
 	tex:isopt
 	tex:isorot
-	tex:isosafety
+	tex:isosigns
 	tex:isotope
 	tex:issuulinks
 	tex:iwonamath
@@ -3492,6 +3545,7 @@ PROVIDES_latexextra="
 	tex:komacv
 	tex:komacv_rg
 	tex:korigamik
+	tex:ktbox
 	tex:ktv_texdata
 	tex:l3backend_dev
 	tex:l3build
@@ -3511,6 +3565,7 @@ PROVIDES_latexextra="
 	tex:latex_firstaid_dev
 	tex:latex_graphics_dev
 	tex:latex_lab_dev
+	tex:latex_tagging_status
 	tex:latex_tools_dev
 	tex:latex_uni8
 	tex:latex2pydata
@@ -3525,12 +3580,14 @@ PROVIDES_latexextra="
 	tex:leading
 	tex:leaflet
 	tex:lebhart
+	tex:lecturenotes
 	tex:lectures
 	tex:lectureslides
 	tex:leftidx
 	tex:leftindex
 	tex:leipzig
 	tex:lengthconvert
+	tex:leporello
 	tex:lettre
 	tex:lettrine
 	tex:lewis
@@ -3558,6 +3615,7 @@ PROVIDES_latexextra="
 	tex:longfbox
 	tex:longfigure
 	tex:longnamefilelist
+	tex:longtwocolumn
 	tex:loops
 	tex:lsc
 	tex:lscapeenhanced
@@ -3591,6 +3649,7 @@ PROVIDES_latexextra="
 	tex:makecookbook
 	tex:makedtx
 	tex:makeglos
+	tex:makegobbler
 	tex:makelabels
 	tex:makerobust
 	tex:mandi
@@ -3619,11 +3678,13 @@ PROVIDES_latexextra="
 	tex:medstarbeamer
 	tex:meetingmins
 	tex:memexsupp
+	tex:memoize_ext
 	tex:memory
 	tex:mensa_tex
 	tex:menu
 	tex:menucard
 	tex:menukeys
+	tex:metacapture
 	tex:metalogox
 	tex:metanorma
 	tex:metastr
@@ -3633,6 +3694,7 @@ PROVIDES_latexextra="
 	tex:mftinc
 	tex:mi_solns
 	tex:midpage
+	tex:milestonetimeline
 	tex:mindflow
 	tex:minibox
 	tex:minidocument
@@ -3642,6 +3704,7 @@ PROVIDES_latexextra="
 	tex:minitoc
 	tex:minorrevision
 	tex:minted
+	tex:minted_code
 	tex:minutes
 	tex:mla_paper
 	tex:mleftright
@@ -3650,6 +3713,7 @@ PROVIDES_latexextra="
 	tex:mnotes
 	tex:moderncv
 	tex:modernposter
+	tex:modernruler
 	tex:moderntimeline
 	tex:modref
 	tex:modroman
@@ -3681,6 +3745,7 @@ PROVIDES_latexextra="
 	tex:multiexpand
 	tex:multifootnote
 	tex:multilang
+	tex:multinotes
 	tex:multiple_choice
 	tex:multirow
 	tex:multitoc
@@ -3730,6 +3795,7 @@ PROVIDES_latexextra="
 	tex:notespages
 	tex:notestex
 	tex:notoccite
+	tex:novabeamer_theme
 	tex:nowidow
 	tex:nox
 	tex:ntheorem
@@ -3743,6 +3809,7 @@ PROVIDES_latexextra="
 	tex:ocr_latex
 	tex:octavo
 	tex:oldstyle
+	tex:onepgnote
 	tex:onlyamsmath
 	tex:opcit
 	tex:opencolor
@@ -3767,6 +3834,7 @@ PROVIDES_latexextra="
 	tex:pagerange
 	tex:pageslts
 	tex:palette
+	tex:panda
 	tex:pangram
 	tex:paper
 	tex:papercdcase
@@ -3775,6 +3843,7 @@ PROVIDES_latexextra="
 	tex:paracol
 	tex:parades
 	tex:paralist
+	tex:paramcalc
 	tex:paresse
 	tex:parnotes
 	tex:parsa
@@ -3831,6 +3900,7 @@ PROVIDES_latexextra="
 	tex:photobook
 	tex:picture
 	tex:piff
+	tex:pkginfograb
 	tex:pkgloader
 	tex:placeins
 	tex:plantslabels
@@ -3884,6 +3954,7 @@ PROVIDES_latexextra="
 	tex:quotchap
 	tex:quoting
 	tex:quotmark
+	tex:rainbowbrackets
 	tex:ran_toks
 	tex:randexam
 	tex:randintlist
@@ -3894,6 +3965,7 @@ PROVIDES_latexextra="
 	tex:readablecv
 	tex:readarray
 	tex:realboxes
+	tex:realscripts
 	tex:recipe
 	tex:recipebook
 	tex:recipecard
@@ -3959,6 +4031,7 @@ PROVIDES_latexextra="
 	tex:sdrt
 	tex:secdot
 	tex:secnum
+	tex:secretx
 	tex:sectionbox
 	tex:sectionbreak
 	tex:sectsty
@@ -4010,6 +4083,7 @@ PROVIDES_latexextra="
 	tex:skills
 	tex:skrapport
 	tex:slantsc
+	tex:slixte
 	tex:smalltableof
 	tex:smart_eqn
 	tex:smartref
@@ -4067,6 +4141,7 @@ PROVIDES_latexextra="
 	tex:svn_prov
 	tex:svninfo
 	tex:swfigure
+	tex:switch
 	tex:swungdash
 	tex:syntax
 	tex:synthslant
@@ -4077,12 +4152,14 @@ PROVIDES_latexextra="
 	tex:tableaux
 	tex:tablefootnote
 	tex:tableof
+	tex:tablericons
 	tex:tablists
 	tex:tabls
 	tex:tablvar
 	tex:tabstackengine
 	tex:tabto_ltx
 	tex:tabu
+	tex:tabular2
 	tex:tabularborder
 	tex:tabularcalc
 	tex:tabularew
@@ -4104,6 +4181,7 @@ PROVIDES_latexextra="
 	tex:telprint
 	tex:templatetools
 	tex:termcal
+	tex:terminalcode
 	tex:termlist
 	tex:termsim
 	tex:testhyphens
@@ -4148,12 +4226,15 @@ PROVIDES_latexextra="
 	tex:todonotes
 	tex:tokcycle
 	tex:tokenizer
+	tex:tokglobalstack
+	tex:tokgroupmark
 	tex:toolbox
 	tex:topfloat
 	tex:topiclongtable
 	tex:totalcount
 	tex:totcount
 	tex:totpages
+	tex:traffic_light_protocol
 	tex:tramlines
 	tex:translations
 	tex:transparent
@@ -4178,6 +4259,7 @@ PROVIDES_latexextra="
 	tex:uassign
 	tex:ucs
 	tex:uebungsblatt
+	tex:ullrcorners
 	tex:umoline
 	tex:underlin
 	tex:underoverlap
@@ -4222,6 +4304,7 @@ PROVIDES_latexextra="
 	tex:volumes
 	tex:vpe
 	tex:vruler
+	tex:vscodeicons
 	tex:vtable
 	tex:vwcol
 	tex:wallcalendar
@@ -4265,18 +4348,24 @@ PROVIDES_latexextra="
 	tex:xkcdcolors
 	tex:xkeymask
 	tex:xltabular
+	tex:xmeaning
 	tex:xmpincl
 	tex:xnewcommand
 	tex:xoptarg
 	tex:xpatch
 	tex:xpeek
+	tex:xpeekahead
 	tex:xprintlen
 	tex:xpunctuate
 	tex:xreview
 	tex:xsavebox
 	tex:xsim
+	tex:xsipa
+	tex:xstacks
+	tex:xstix2
 	tex:xstring
 	tex:xtab
+	tex:xtufte
 	tex:xurl
 	tex:xwatermark
 	tex:xytree
@@ -4373,6 +4462,8 @@ PROVIDES_latexrecommended="
 	tex:latexbug
 	tex:lineno
 	tex:listings
+	tex:ltx_talk
+	tex:lua_unicode_math
 	tex:lwarp
 	tex:mathspec
 	tex:mathtools
@@ -4456,6 +4547,7 @@ PROVIDES_luatex="
 	tex:barracuda
 	tex:bezierplot
 	tex:blopentype
+	tex:char2path
 	tex:checkcites
 	tex:chickenize
 	tex:chinese_jfm
@@ -4467,11 +4559,16 @@ PROVIDES_luatex="
 	tex:emoji
 	tex:emojicite
 	tex:enigma
+	tex:fancymag
+	tex:farbe
 	tex:gitinfo_lua
 	tex:ideavault
 	tex:innerscript
 	tex:interpreter
 	tex:kanaparser
+	tex:kkluaverb
+	tex:kkran
+	tex:kksymbols
 	tex:ligtype
 	tex:linebreaker
 	tex:longmath
@@ -4482,7 +4579,6 @@ PROVIDES_luatex="
 	tex:lua_typo
 	tex:lua_uca
 	tex:lua_ul
-	tex:lua_uni_algos
 	tex:lua_visual_debug
 	tex:lua_widow_control
 	tex:luaaddplot
@@ -4498,10 +4594,12 @@ PROVIDES_luatex="
 	tex:luaindex
 	tex:luainputenc
 	tex:luakeys
+	tex:luakeyval
 	tex:lualatex_math
 	tex:lualatex_truncate
 	tex:lualibs
 	tex:lualinalg
+	tex:lualineno
 	tex:luamathalign
 	tex:luamaths
 	tex:luamml
@@ -4516,6 +4614,7 @@ PROVIDES_luatex="
 	tex:luarandom
 	tex:luaset
 	tex:luatbls
+	tex:luatex_type_definitions
 	tex:luatex85
 	tex:luatexbase
 	tex:luatexko
@@ -4535,6 +4634,7 @@ PROVIDES_luatex="
 	tex:nodetree
 	tex:odsfile
 	tex:optex
+	tex:parstat
 	tex:pdfarticle
 	tex:pdfextra
 	tex:penlight
@@ -4544,6 +4644,7 @@ PROVIDES_luatex="
 	tex:plantuml
 	tex:pyluatex
 	tex:scikgtex
+	tex:seatingchart
 	tex:selnolig
 	tex:semesterplannerlua
 	tex:showhyphenation
@@ -4615,6 +4716,7 @@ PROVIDES_mathscience="
 	tex:amstex
 	tex:annotate_equations
 	tex:apxproof
+	tex:aspen
 	tex:atableau
 	tex:autobreak
 	tex:axodraw2
@@ -4628,8 +4730,11 @@ PROVIDES_mathscience="
 	tex:boldtensors
 	tex:bosisio
 	tex:bpchem
+	tex:bracealign
 	tex:bropd
+	tex:broydensolve
 	tex:bussproofs
+	tex:bussproofs_colorful
 	tex:bussproofs_extra
 	tex:bytefield
 	tex:calculation
@@ -4705,9 +4810,11 @@ PROVIDES_mathscience="
 	tex:fixdif
 	tex:fixmath
 	tex:fnspe
+	tex:fodot
 	tex:formal_grammar
 	tex:fouridx
 	tex:freealign
+	tex:freemath
 	tex:functan
 	tex:galois
 	tex:gastex
@@ -4725,9 +4832,11 @@ PROVIDES_mathscience="
 	tex:hepparticles
 	tex:hepthesis
 	tex:hepunits
+	tex:hideproofs
 	tex:ibrackets
 	tex:includernw
 	tex:interval
+	tex:intexgral
 	tex:ionumbers
 	tex:isomath
 	tex:isphysicalmath
@@ -4741,11 +4850,14 @@ PROVIDES_mathscience="
 	tex:letterswitharrows
 	tex:lie_hasse
 	tex:linearregression
+	tex:linkedthm
 	tex:logicproof
+	tex:logictools
 	tex:longdivision
 	tex:lpform
 	tex:lplfitch
 	tex:lstbayes
+	tex:lua_regression
 	tex:luanumint
 	tex:math_operator
 	tex:mathcommand
@@ -4795,6 +4907,7 @@ PROVIDES_mathscience="
 	tex:physics
 	tex:physics_patch
 	tex:physics2
+	tex:physics3
 	tex:physunits
 	tex:pinoutikz
 	tex:pm_isomath
@@ -4809,8 +4922,12 @@ PROVIDES_mathscience="
 	tex:pseudocode
 	tex:pythonhighlight
 	tex:qsharp
+	tex:quantikz
+	tex:quantum_chemistry_bonn
+	tex:quantumcubemodel
 	tex:quickreaction
 	tex:quiver
+	tex:qworld
 	tex:rank_2_roots
 	tex:rbt_mathnotes
 	tex:rec_thy
@@ -4826,6 +4943,7 @@ PROVIDES_mathscience="
 	tex:sciposter
 	tex:sclang_prettifier
 	tex:scratchx
+	tex:seqcalc
 	tex:sesamanuel
 	tex:sfg
 	tex:shuffle
@@ -4862,6 +4980,7 @@ PROVIDES_mathscience="
 	tex:temporal_logic
 	tex:tensind
 	tex:tensor
+	tex:tensormatrix
 	tex:tex_ewd
 	tex:textgreek
 	tex:textopo
@@ -4869,6 +4988,7 @@ PROVIDES_mathscience="
 	tex:thmbox
 	tex:thmtools
 	tex:tiscreen
+	tex:tkz_interval
 	tex:turnstile
 	tex:ulqda
 	tex:unitsdef
@@ -4879,6 +4999,7 @@ PROVIDES_mathscience="
 	tex:youngtab
 	tex:yquant
 	tex:ytableau
+	tex:zeckendorf
 	tex:zx_calculus
 	"
 REQUIRES_mathscience="
@@ -5016,6 +5137,7 @@ PROVIDES_music="
 	tex:chordbox
 	tex:ddphonism
 	tex:figbas
+	tex:fretplot
 	tex:gchords
 	tex:gregoriotex
 	tex:gtrcrd
@@ -5102,6 +5224,7 @@ PROVIDES_pictures="
 	tex:bodegraph
 	tex:bondgraph
 	tex:bondgraphs
+	tex:bootstrapicons
 	tex:braids
 	tex:bxeepic
 	tex:byo_twemojis
@@ -5149,6 +5272,7 @@ PROVIDES_pictures="
 	tex:fitbox
 	tex:flowchart
 	tex:forest
+	tex:forest_ext
 	tex:genealogytree
 	tex:getmap
 	tex:gincltex
@@ -5166,6 +5290,7 @@ PROVIDES_pictures="
 	tex:hvfloat
 	tex:istgame
 	tex:kblocks
+	tex:keisennote
 	tex:kinematikz
 	tex:knitting
 	tex:knittingpattern
@@ -5175,8 +5300,10 @@ PROVIDES_pictures="
 	tex:liftarm
 	tex:lpic
 	tex:lroundrect
+	tex:lua_tikz3dtools
 	tex:luamesh
 	tex:luasseq
+	tex:lucide_icons
 	tex:maker
 	tex:makeshape
 	tex:maritime
@@ -5191,6 +5318,9 @@ PROVIDES_pictures="
 	tex:nl_interval
 	tex:nndraw
 	tex:numericplots
+	tex:open_everyday_symbols
+	tex:openmoji
+	tex:optikz
 	tex:outilsgeomtikz
 	tex:papiergurvan
 	tex:pb_diagram
@@ -5235,7 +5365,7 @@ PROVIDES_pictures="
 	tex:pxpic
 	tex:qcircuit
 	tex:qrcode
-	tex:quantikz
+	tex:qrcodetikz
 	tex:randbild
 	tex:randomwalk
 	tex:realhats
@@ -5269,6 +5399,7 @@ PROVIDES_pictures="
 	tex:tikz_bbox
 	tex:tikz_bpmn
 	tex:tikz_cd
+	tex:tikz_cookingsymbols
 	tex:tikz_decofonts
 	tex:tikz_dependency
 	tex:tikz_dimline
@@ -5295,18 +5426,21 @@ PROVIDES_pictures="
 	tex:tikz_qtree
 	tex:tikz_relay
 	tex:tikz_sfc
+	tex:tikz_shields
 	tex:tikz_swigs
 	tex:tikz_timing
 	tex:tikz_trackschematic
 	tex:tikz_truchet
 	tex:tikz2d_fr
 	tex:tikz3d_fr
+	tex:tikzbrickfigurines
 	tex:tikzbricks
 	tex:tikzcalendarnotes
 	tex:tikzcodeblocks
 	tex:tikzdotncross
 	tex:tikzducks
 	tex:tikzfill
+	tex:tikzfxgraph
 	tex:tikzinclude
 	tex:tikzlings
 	tex:tikzmark
@@ -5350,6 +5484,7 @@ PROVIDES_pictures="
 	tex:utfsym
 	tex:vectorlogos
 	tex:venndiagram
+	tex:vexillology
 	tex:visualpstricks
 	tex:wheelchart
 	tex:wordcloud
@@ -5421,6 +5556,7 @@ PROVIDES_plaingeneric="
 	tex:dowith
 	tex:eijkhout
 	tex:encxvlna
+	tex:eoldef
 	tex:epigram
 	tex:epsf
 	tex:epsf_dvipdfmx
@@ -5456,6 +5592,7 @@ PROVIDES_plaingeneric="
 	tex:listofitems
 	tex:localloc
 	tex:mathdots
+	tex:measurebox
 	tex:metatex
 	tex:midnight
 	tex:mkpattern
@@ -5472,8 +5609,10 @@ PROVIDES_plaingeneric="
 	tex:path
 	tex:pdf_trans
 	tex:pdfmsym
+	tex:pdftoolbox
 	tex:pitex
 	tex:placeins_plain
+	tex:plain_widow
 	tex:plainpkg
 	tex:plipsum
 	tex:plnfss
@@ -5489,6 +5628,7 @@ PROVIDES_plaingeneric="
 	tex:shade
 	tex:simplekv
 	tex:soul
+	tex:stretchy
 	tex:swrule
 	tex:systeme
 	tex:tabto_generic
@@ -5500,6 +5640,7 @@ PROVIDES_plaingeneric="
 	tex:texdimens
 	tex:texinfo
 	tex:timetable
+	tex:tokmap
 	tex:tracklang
 	tex:transparent_io
 	tex:treetex
@@ -5508,6 +5649,7 @@ PROVIDES_plaingeneric="
 	tex:ulem
 	tex:upca
 	tex:varisize
+	tex:visualtoks
 	tex:xii
 	tex:xii_lat
 	tex:xintsession
@@ -5595,11 +5737,13 @@ PROVIDES_pstricks="
 	tex:pst_fill
 	tex:pst_fit
 	tex:pst_flags
+	tex:pst_fourbarlinkage
 	tex:pst_fr3d
 	tex:pst_fractal
 	tex:pst_fun
 	tex:pst_func
 	tex:pst_gantt
+	tex:pst_gears
 	tex:pst_geo
 	tex:pst_geometrictools
 	tex:pst_gr3d
@@ -5609,6 +5753,7 @@ PROVIDES_pstricks="
 	tex:pst_infixplot
 	tex:pst_intersect
 	tex:pst_jtree
+	tex:pst_kepler
 	tex:pst_knot
 	tex:pst_labo
 	tex:pst_layout
@@ -5617,10 +5762,12 @@ PROVIDES_pstricks="
 	tex:pst_lsystem
 	tex:pst_magneticfield
 	tex:pst_marble
+	tex:pst_massspring
 	tex:pst_math
 	tex:pst_mirror
 	tex:pst_moire
 	tex:pst_node
+	tex:pst_nutation
 	tex:pst_ob3d
 	tex:pst_ode
 	tex:pst_optexp
@@ -5646,6 +5793,7 @@ PROVIDES_pstricks="
 	tex:pst_solides3d
 	tex:pst_soroban
 	tex:pst_spectra
+	tex:pst_sphericaltrochoid
 	tex:pst_spinner
 	tex:pst_stru
 	tex:pst_support
@@ -5712,10 +5860,12 @@ PROVIDES_publishers="
 	tex:abnt
 	tex:abntex2
 	tex:abntexto
+	tex:abntexto_uece
 	tex:acmart
 	tex:acmconf
 	tex:active_conf
 	tex:adfathesis
+	tex:aeskwadraat
 	tex:afthesis
 	tex:aguplus
 	tex:aiaa
@@ -5763,9 +5913,12 @@ PROVIDES_publishers="
 	tex:cmpj
 	tex:confproc
 	tex:contract
+	tex:cqjtuthesis
 	tex:cquthesis
 	tex:dccpaper
+	tex:deutschesmuseum
 	tex:dithesis
+	tex:dlrg_templates
 	tex:ebook
 	tex:ebsthesis
 	tex:ecothesis
@@ -5786,6 +5939,7 @@ PROVIDES_publishers="
 	tex:fcavtex
 	tex:fcltxdoc
 	tex:fei
+	tex:fhj_script
 	tex:ftc_notebook
 	tex:gaceta
 	tex:gammas
@@ -5810,6 +5964,8 @@ PROVIDES_publishers="
 	tex:hobete
 	tex:hu_berlin_bundle
 	tex:hustthesis
+	tex:hustvisual
+	tex:iacrj
 	tex:iaria
 	tex:iaria_lite
 	tex:icsv
@@ -5829,7 +5985,9 @@ PROVIDES_publishers="
 	tex:jourcl
 	tex:jourrr
 	tex:jpsj
+	tex:jsonresume
 	tex:jwjournal
+	tex:jyu_chem_thesis
 	tex:kdgdocs
 	tex:kdpcover
 	tex:kfupm_math_exam
@@ -5844,6 +6002,7 @@ PROVIDES_publishers="
 	tex:llncsconf
 	tex:lni
 	tex:lps
+	tex:maine_thesis
 	tex:matc3
 	tex:matc3mem
 	tex:mcmthesis
@@ -5853,6 +6012,7 @@ PROVIDES_publishers="
 	tex:mluexercise
 	tex:mnras
 	tex:modeles_factures_belges_assocs
+	tex:modernnewspaper
 	tex:msu_thesis
 	tex:mucproc
 	tex:mugsthesis
@@ -5881,8 +6041,11 @@ PROVIDES_publishers="
 	tex:onrannual
 	tex:opteng
 	tex:oststud
+	tex:ou_tma
 	tex:oup_authoring_template
+	tex:pats_resume
 	tex:philosophersimprint
+	tex:phimisci
 	tex:pittetd
 	tex:pkuthss
 	tex:powerdot_fuberlin
@@ -5898,11 +6061,13 @@ PROVIDES_publishers="
 	tex:regulatory
 	tex:resphilosophica
 	tex:resumecls
+	tex:retosmatematicos
 	tex:revtex
 	tex:revtex4
 	tex:revtex4_1
 	tex:rub_kunstgeschichte
 	tex:rutitlepage
+	tex:rwth_ci
 	tex:ryersonsgsthesis
 	tex:ryethesis
 	tex:sageep
@@ -5930,6 +6095,7 @@ PROVIDES_publishers="
 	tex:stellenbosch_2
 	tex:suftesi
 	tex:sugconf
+	tex:sysuthesis
 	tex:tabriz_thesis
 	tex:technion_thesis_template
 	tex:texilikechaps
@@ -6078,7 +6244,6 @@ PROVIDES_xetex="
 	tex:na_position
 	tex:philokalia
 	tex:ptext
-	tex:realscripts
 	tex:simple_resume_cv
 	tex:simple_thesis_dissertation
 	tex:tetragonos

@@ -1,4 +1,4 @@
-#!/bin/perl
+#!perl
 # Copyright 2021, Joachim Mairböck <j.mairboeck@gmail.com>
 # Distributed under the terms of the MIT license.
 

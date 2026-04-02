@@ -6,19 +6,47 @@ are free software, including support for many languages around the world."
 HOMEPAGE="http://tug.org/texlive/"
 COPYRIGHT="1996 by collaboration between the TeX user groups."
 LICENSE="GNU GPL v2"
-REVISION="2"
-fullVersion=20250308
-SOURCE_URI="ftp://tug.org/historic/systems/texlive/$portVersion/install-tl-unx.tar.gz"
-SOURCE_URI_2="ftp://tug.org/historic/systems/texlive/$portVersion/texlive-$fullVersion-texmf.tar.xz"
-SOURCE_URI_3="ftp://tug.org/historic/systems/texlive/$portVersion/texlive-$fullVersion-extra.tar.xz"
-CHECKSUM_SHA256="9938f192af75f792e84282580cce6eedac32969e0e07b33cb39ca1b699e948b6"
-CHECKSUM_SHA256_2="08dcda7430bf0d2f6ebb326f1e197e1473d3f7cc0984a2adb7236df45316c7cf"
-CHECKSUM_SHA256_3="ea69cfecbc9b138acbc45476e8cb4d9357f5e4e45fd12b3bf9ceabbebd7669d2"
+REVISION="1"
+fullVersion=20260301
+
+SOURCE_URI="ftp://tug.org/historic/systems/texlive/$portVersion/install-tl-unx.tar.gz
+	https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/$portVersion/install-tl-unx.tar.gz
+	ftp://ftp.math.utah.edu/pub/tex/historic/systems/texlive/$portVersion/install-tl-unx.tar.gz
+	https://texlive.info/historic/systems/texlive/$portVersion/install-tl-unx.tar.gz
+	https://ftp.tu-chemnitz.de/pub/tug/historic/systems/texlive/$portVersion/install-tl-unx.tar.gz
+	ftp://ftp.tu-chemnitz.de/pub/tug/historic/systems/texlive/$portVersion/install-tl-unx.tar.gz
+	https://pi.kwarc.info/historic/systems/texlive/$portVersion/install-tl-unx.tar.gz
+	https://mirrors.tuna.tsinghua.edu.cn/tex-historic-archive/systems/texlive/$portVersion/install-tl-unx.tar.gz
+	https://mirror.nju.edu.cn/tex-historic/systems/texlive/$portVersion/install-tl-unx.tar.gz"
+CHECKSUM_SHA256="5cc0703d6fe49f00a2932c4e3bcee37a11cc0a969ae9fcbf9cad6f0d984d6363"
 SOURCE_DIR="install-tl-$fullVersion"
-SOURCE_DIR_2="texlive-$fullVersion-texmf"
-SOURCE_DIR_3="texlive-$fullVersion-extra"
 SOURCE_FILENAME="install-tl-unx-$portVersion.tar.gz"
+
+SOURCE_URI_2="ftp://tug.org/historic/systems/texlive/$portVersion/texlive-$fullVersion-texmf.tar.xz
+	https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/$portVersion/texlive-$fullVersion-texmf.tar.xz
+	ftp://ftp.math.utah.edu/pub/tex/historic/systems/texlive/$portVersion/texlive-$fullVersion-texmf.tar.xz
+	https://texlive.info/historic/systems/texlive/$portVersion/texlive-$fullVersion-texmf.tar.xz
+	https://ftp.tu-chemnitz.de/pub/tug/historic/systems/texlive/$portVersion/texlive-$fullVersion-texmf.tar.xz
+	ftp://ftp.tu-chemnitz.de/pub/tug/historic/systems/texlive/$portVersion/texlive-$fullVersion-texmf.tar.xz
+	https://pi.kwarc.info/historic/systems/texlive/$portVersion/texlive-$fullVersion-texmf.tar.xz
+	https://mirrors.tuna.tsinghua.edu.cn/tex-historic-archive/systems/texlive/$portVersion/texlive-$fullVersion-texmf.tar.xz
+	https://mirror.nju.edu.cn/tex-historic/systems/texlive/$portVersion/texlive-$fullVersion-texmf.tar.xz"
+CHECKSUM_SHA256_2="349eb7c5c2c15333d77490a52934b053c6dcb88834f2224978f7a4edf67940e7"
+SOURCE_DIR_2="texlive-$fullVersion-texmf"
 PATCHES_2="texlive-$portVersion-source2.patchset"
+
+SOURCE_URI_3="ftp://tug.org/historic/systems/texlive/$portVersion/texlive-$fullVersion-extra.tar.xz
+	https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/$portVersion/texlive-$fullVersion-extra.tar.xz
+	ftp://ftp.math.utah.edu/pub/tex/historic/systems/texlive/$portVersion/texlive-$fullVersion-extra.tar.xz
+	https://texlive.info/historic/systems/texlive/$portVersion/texlive-$fullVersion-extra.tar.xz
+	https://ftp.tu-chemnitz.de/pub/tug/historic/systems/texlive/$portVersion/texlive-$fullVersion-extra.tar.xz
+	ftp://ftp.tu-chemnitz.de/pub/tug/historic/systems/texlive/$portVersion/texlive-$fullVersion-extra.tar.xz
+	https://pi.kwarc.info/historic/systems/texlive/$portVersion/texlive-$fullVersion-extra.tar.xz
+	https://mirrors.tuna.tsinghua.edu.cn/tex-historic-archive/systems/texlive/$portVersion/texlive-$fullVersion-extra.tar.xz
+	https://mirror.nju.edu.cn/tex-historic/systems/texlive/$portVersion/texlive-$fullVersion-extra.tar.xz"
+CHECKSUM_SHA256_3="68d78428d012bce8c2ffaf7027c701a66c51039a16059d33f30980330033a5d0"
+SOURCE_DIR_3="texlive-$fullVersion-extra"
+
 ADDITIONAL_FILES="
 	createSubpackageInfos.pl
 	getPackageEntries.pl
@@ -31,7 +59,8 @@ ADDITIONAL_FILES="
 ARCHITECTURES="any"
 DISABLE_SOURCE_PACKAGE="yes"
 
-libkpathseaVersion="6.4.1" # this is to make sure that the same version of texlive_core is used
+libkpathseaVersion="6.4.2" # this is to make sure that the same version of texlive_core is used
+luametatexVersion="2.11.08" # TODO: do we need this?
 
 PROVIDES="
 	texlive = $portVersion
@@ -73,9 +102,18 @@ fi
 # source the pregenerated subpackage infos instead
 source $portDir/additional-files/subpackageInfos.sh
 
+PROVIDES_context+="
+	cmd:context.lua
+	cmd:mtxrun.lua
+	"
+REQUIRES_context+="
+	cmd:luametatex
+	"
+
 BUILD_REQUIRES="
 	haiku_devel
 	cmd:kpsewhich >= $libkpathseaVersion
+	cmd:luametatex
 	"
 BUILD_PREREQUIRES="
 	cmd:perl
@@ -286,4 +324,9 @@ INSTALL()
 				-m 755 $portDir/additional-files/texlive_postinstall.sh
 		fi
 	done
+
+	ln -s ../data/texlive/texmf-dist/scripts/context/lua/context.lua \
+		$(getPackagePrefix context)/$relativeBinDir/context.lua
+	ln -s ../data/texlive/texmf-dist/scripts/context/lua/mtxrun.lua \
+		$(getPackagePrefix context)/$relativeBinDir/mtxrun.lua
 }
