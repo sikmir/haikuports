@@ -325,6 +325,7 @@ INSTALL()
 		fi
 	done
 
+	mkdir -p $(getPackagePrefix context)/$relativeBinDir
 	ln -s ../data/texlive/texmf-dist/scripts/context/lua/context.lua \
 		$(getPackagePrefix context)/$relativeBinDir/context.lua
 	ln -s ../data/texlive/texmf-dist/scripts/context/lua/mtxrun.lua \
