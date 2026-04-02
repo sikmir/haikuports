@@ -14,7 +14,7 @@ COPYRIGHT="1995-96 Jens T. Berger Thielemann"
 LICENSE="GNU GPL v2"
 REVISION="1"
 SOURCE_URI="http://download.savannah.gnu.org/releases/chktex/chktex-$portVersion.tar.gz"
-CHECKSUM_SHA256="df6ee31632a4f4a8e18849b804657e27e3d96deb3f237edbd25656415eb31195"
+CHECKSUM_SHA256="cea81a1cde2f151db2b5d2adf2271becfd3c0c1f40eca5cf45b52beeb4a636f9"
 PATCHES="chktex-$portVersion.patchset"
 
 ARCHITECTURES="all"
@@ -28,16 +28,20 @@ PROVIDES="
 REQUIRES="
 	haiku
 	cmd:perl
+	lib:libncursesw
 	lib:libpcre
 	lib:libpcreposix
 	"
 
 BUILD_REQUIRES="
 	haiku_devel
+	devel:libncursesw
 	devel:libpcre
 	devel:libpcreposix
 	"
 BUILD_PREREQUIRES="
+	cmd:autoconf
+	cmd:automake
 	cmd:awk
 	cmd:gcc
 	cmd:make
@@ -58,6 +62,7 @@ defineDebugInfoPackage chktex \
 
 BUILD()
 {
+	autoreconf -fi
 	runConfigure ./configure
 	make $jobArgs
 }

@@ -1,4 +1,4 @@
-From 7459a6821fa040b2d24fcc0572a9bbe9dd9027ad Mon Sep 17 00:00:00 2001
+From 128768ae8030a8d7226b51ddfd6a066a313e1476 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Joachim=20Mairb=C3=B6ck?= <j.mairboeck@gmail.com>
 Date: Mon, 19 Aug 2024 15:44:04 +0200
 Subject: fix make install
@@ -9,7 +9,7 @@ If needed, it is available in texlive_binextra_doc.
 Also install the other man pages.
 
 diff --git a/Makefile.in b/Makefile.in
-index 4c8222e..746ad9e 100644
+index a0f81db..d1a5506 100644
 --- a/Makefile.in
 +++ b/Makefile.in
 @@ -161,7 +161,7 @@ check: chktex $(srcdir)/$(TestOutFile) chktexrc
@@ -31,17 +31,17 @@ index 4c8222e..746ad9e 100644
  	fi
  
 -- 
-2.45.2
+2.52.0
 
 
-From 3ccc269f7a3b003d4017225d5b24f18c70d4afda Mon Sep 17 00:00:00 2001
+From e62933e1bc5a694dd66b37b13241bfbf03faa645 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Joachim=20Mairb=C3=B6ck?= <j.mairboeck@gmail.com>
 Date: Mon, 19 Aug 2024 17:23:59 +0200
 Subject: gcc2 fixes
 
 
 diff --git a/FindErrs.c b/FindErrs.c
-index d817369..b46c010 100644
+index 21f8c5c..75aee92 100644
 --- a/FindErrs.c
 +++ b/FindErrs.c
 @@ -351,6 +351,7 @@ static char *PreProcess(void)
@@ -61,7 +61,7 @@ index d817369..b46c010 100644
                      if (error > 0)
                      {
                          *(uint64_t *)StkTop(&FileSuppStack) |= errbit;
-@@ -1133,19 +1134,19 @@ static void CheckDash(void)
+@@ -1140,19 +1141,19 @@ static void CheckDash(void)
                   * this on the first dash */
                  if (*TmpPtr != '-')
                  {
@@ -115,5 +115,72 @@ index 67e2bea..4645966 100644
      InsertWord(buf,TeXInputs);
  }
 -- 
-2.45.2
+2.52.0
+
+
+From 1d70263b2d74779720c013c6f1c309750ad71c20 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Joachim=20Mairb=C3=B6ck?= <j.mairboeck@gmail.com>
+Date: Thu, 2 Apr 2026 19:38:43 +0200
+Subject: fix build, using and linking ncurses properly for termcap
+
+
+diff --git a/OpSys.c b/OpSys.c
+index 4645966..b8c65aa 100644
+--- a/OpSys.c
++++ b/OpSys.c
+@@ -73,7 +73,7 @@
+ #  define USE_RECURSE 0
+ #endif
+ 
+-#if defined(HAVE_LIBTERMCAP) || defined(HAVE_LIBTERMLIB)
++#if defined(HAVE_TERMCAP_H) || defined(HAVE_TERMLIB_H)
+ #  define USE_TERMCAP 1
+ #endif
+ 
+diff --git a/configure.ac b/configure.ac
+index bedb46b..c1996f3 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -123,7 +123,7 @@ AC_PATH_PROG(LYNX, lynx)
+ AC_PATH_PROG(LATEX2HTML, latex2html)
+ 
+ dnl Checks for libraries.
+-AC_SEARCH_LIBS(tgetent, [termcap termlib], [], [AC_MSG_ERROR([termcap library not found])])
++AC_SEARCH_LIBS(tgetent, [termcap termlib ncursesw], [], [AC_MSG_ERROR([termcap library not found])])
+ 
+ AC_HEADER_DIRENT
+ AC_CHECK_HEADERS(limits.h stat.h strings.h stdarg.h dnl
+@@ -151,7 +151,7 @@ if test "$enable_pcre" = "yes"; then
+   if test "$WITH_PCRE" = "yes"; then
+     AC_DEFINE(HAVE_PCRE, 1, Whether PCRE can be used for user warnings.)
+     CFLAGS="${CFLAGS} $(pcre-config --cflags-posix)"
+-    LIBS="$(pcre-config --libs-posix)"
++    LIBS+="$(pcre-config --libs-posix)"
+   else
+     AC_DEFINE(HAVE_PCRE, 0)
+     AC_MSG_WARN(PCRE library not found.)
+-- 
+2.52.0
+
+
+From 1e7372836d0f6ba36792f9bcac724d491c44fa52 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Joachim=20Mairb=C3=B6ck?= <j.mairboeck@gmail.com>
+Date: Thu, 2 Apr 2026 19:57:58 +0200
+Subject: fix broken test
+
+
+diff --git a/tests/run-tests.sh b/tests/run-tests.sh
+index 8d0b4aa..95a1da2 100755
+--- a/tests/run-tests.sh
++++ b/tests/run-tests.sh
+@@ -132,6 +132,6 @@ echo ">>> OK!"
+ # Command line options
+ echo "Checking command line RC settings..."
+ (${builddir}/chktex -d 4 -STabSize=7 </dev/null 2>&1 \
+-     | grep -A1 TabSize | grep -E '\t7$' >/dev/null) \
++     | grep -A1 TabSize | grep -E '	7$' >/dev/null) \
+     || (echo Setting TabSize from command line failed; exit 1)
+ echo ">>> OK!"
+-- 
+2.52.0
 
