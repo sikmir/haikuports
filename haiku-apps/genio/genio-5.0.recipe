@@ -6,18 +6,19 @@ declaration, quick fix, format, rename)
 * Multi-project browser
 * Class outline
 * Integrated source control with GIT (including opening a remote project)
+* Integrated terminal
 * Links to file and build errors in Build Log and Console I/O
 * Build on save / Save on build
 * User templates for quickly creating new files and projects
 * Rich editor with many features, like syntax highlighting
 * Full screen and Focus mode"
 HOMEPAGE="https://codeberg.org/Genio/Genio/releases"
-COPYRIGHT="2022-2025 The Genio Team"
+COPYRIGHT="2022-2026 The Genio Team"
 LICENSE="BSD (3-clause)
 	MIT"
 REVISION="1"
 SOURCE_URI="https://codeberg.org/Genio/Genio/archive/v$portVersion.tar.gz"
-CHECKSUM_SHA256="d36b225254973e31d4f2ee4f6f0be8d28bc50fa26346aa1069305f1f7755a4b6"
+CHECKSUM_SHA256="27cfb395a951673ea471e0b8b57deb24364e0dacb29e985e02ecf1328e0be4f1"
 SOURCE_FILENAME="Genio-v$portVersion.tar.gz"
 SOURCE_DIR="genio"
 
@@ -66,6 +67,7 @@ INSTALL()
 	install -m 0755 -d "$appsDir"
 	install -m 0755 -t "$appsDir" app/Genio
 	mkdir -p "$dataDir/Genio"
+	cp libs/terminal/genio_terminal_addon "$dataDir/Genio"
 	cp -a data/* "$dataDir/Genio"
 
 	mkdir -p $docDir
