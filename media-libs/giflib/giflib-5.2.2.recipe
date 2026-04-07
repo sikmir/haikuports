@@ -18,7 +18,7 @@ HOMEPAGE="https://sourceforge.net/projects/giflib/"
 COPYRIGHT="1997-2007 Eric S. Raymond and Toshio Kuratomi"
 LICENSE="MIT"
 REVISION="1"
-SOURCE_URI="https://downloads.sourceforge.net/project/giflib/giflib-$portVersion.tar.gz"
+SOURCE_URI="https://downloads.sourceforge.net/project/giflib/giflib-5.x/giflib-$portVersion.tar.gz"
 CHECKSUM_SHA256="be7ffbd057cadebe2aa144542fd90c6838c6a083b5e8a9048b8ee3b66b29d5fb"
 
 ARCHITECTURES="all !x86_gcc2"
