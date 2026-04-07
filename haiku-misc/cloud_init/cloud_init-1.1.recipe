@@ -3,7 +3,7 @@ DESCRIPTION="When installed, cloud-init enhances Haiku's ability to run in \
 cloud environments by provisioning the system from the providers cloud-init \
 metadata server.
 "
-HOMEPAGE="https://gitlab.com/kallisti5/cloud-init-haiku"
+HOMEPAGE="https://codeberg.org/kallisti5/cloud-init-haiku"
 COPYRIGHT="2014-2021 Alexander von Gluck IV"
 LICENSE="MIT"
 REVISION="1"
