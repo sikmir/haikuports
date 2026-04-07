@@ -1,13 +1,13 @@
 SUMMARY="A backup application for Haiku"
 DESCRIPTION="A backup application for Haiku."
-HOMEPAGE="https://gitlab.com/kallisti5/backup"
+HOMEPAGE="https://codeberg.org/kallisti5/haiku-backup"
 COPYRIGHT="2013 Alexander von Gluck IV"
 LICENSE="MIT"
 REVISION="6"
 srcGitRev="7708212786526b9a5370e57e32a1032053d7345a"
-SOURCE_URI="$HOMEPAGE/archive/$srcGitRev.tar.gz"
-CHECKSUM_SHA256="86a415b9d6bcf3b8b255958df75dbd4c97ef397c3195ec4694a7bb959bdca1b2"
-SOURCE_DIR="backup-$srcGitRev"
+SOURCE_URI="$HOMEPAGE/archive/v$portVersion.tar.gz"
+CHECKSUM_SHA256="97929465dbb80f8944445f49c10ed090eff361de57d2c91027caeb4a006d7f01"
+SOURCE_DIR="haiku-backup"
 
 ARCHITECTURES="!all"
 
