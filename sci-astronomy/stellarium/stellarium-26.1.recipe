@@ -3,11 +3,11 @@ DESCRIPTION="Stellarium is a free open source planetarium for your computer. \
 It shows a realistic sky in 3D, just like what you see with the naked eye, \
 binoculars or a telescope."
 HOMEPAGE="https://stellarium.org"
-COPYRIGHT="2000-2025 Stellarium Developers"
+COPYRIGHT="2000-2026 Stellarium Developers"
 LICENSE="GNU GPL v2"
 REVISION="1"
 SOURCE_URI="https://github.com/Stellarium/stellarium/releases/download/v$portVersion/stellarium-$portVersion.tar.bz2"
-CHECKSUM_SHA256="772e71851bbf7918084060bb30f77029e2c883e819399993deb99b748f8ed2b7"
+CHECKSUM_SHA256="6d1237790756ca87b9550fe6eb77296f47c3e3b73080dd7264868b791d40732c"
 ADDITIONAL_FILES="stellarium.rdef.in"
 
 ARCHITECTURES="all !x86_gcc2"
@@ -35,6 +35,7 @@ REQUIRES="
 	lib:libQt6Positioning$secondaryArchSuffix
 	lib:libQt6Qml$secondaryArchSuffix
 	lib:libQt6SerialPort$secondaryArchSuffix
+	lib:libQt6Svg$secondaryArchSuffix
 	lib:libQt6TextToSpeech$secondaryArchSuffix
 	lib:libQt6Widgets$secondaryArchSuffix
 	lib:libQXlsxQt6$secondaryArchSuffix
@@ -57,6 +58,7 @@ BUILD_REQUIRES="
 	devel:libQt6Positioning$secondaryArchSuffix
 	devel:libQt6Qml$secondaryArchSuffix
 	devel:libQt6SerialPort$secondaryArchSuffix
+	devel:libQt6Svg$secondaryArchSuffix
 	devel:libQt6TextToSpeech$secondaryArchSuffix
 	devel:libQt6Widgets$secondaryArchSuffix
 	devel:libQXlsxQt6$secondaryArchSuffix
